@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  bin-php:
+    image: bin-php
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - ./playground:/playground
+    restart: always
+    entrypoint: ["tail", "-f", "/dev/null"]
+    container_name: bin_php
+
+

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  bin-python:
+    image: bin-python
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - ./binaries:/python_versions
+      - ./playground:/playground
+    restart: always
+    entrypoint: ["tail", "-f", "/dev/null"]
+    container_name: bin_python
+
+

@@ -1,0 +1,15 @@
+version: "3"
+services:
+  portainer:
+    image: portainer/portainer
+    command: --no-auth -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9090:9000
+    labels:
+      - 'traefik.backend=portainer'
+      - 'traefik.port=9090'
+      - 'traefik.frontend.rule=Host:local.portainer.com'
+    restart: always
+    container_name: portainer

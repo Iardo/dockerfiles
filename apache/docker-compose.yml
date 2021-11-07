@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+    svc-apache:
+      image: php:7.4-apache
+      volumes:
+        - ./www:/var/www/html
+      ports:
+        - 80:80
+      restart: always
+      container_name: svc_apache
+
+
