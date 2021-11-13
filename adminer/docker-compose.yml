@@ -8,4 +8,5 @@ services:
        - 'traefik.backend=adminer'
        - 'traefik.port=9000'
        - 'traefik.frontend.rule=Host:local.adminer.com'
+     restart: always
      container_name: adminer

@@ -1,7 +1,5 @@
 version: "3.8"
-
 services:
-
   Aria2-Pro:
     container_name: aria2-pro
     image: p3terx/aria2-pro
@@ -28,7 +26,7 @@ services:
       - 6800:6800
       - 6888:6888
       - 6888:6888/udp
-    restart: unless-stopped
+    restart: always
 # Since Aria2 will continue to generate logs, limit the log size to 1M to prevent your hard disk from running out of space.
     logging:
       driver: json-file
@@ -44,7 +42,7 @@ services:
     network_mode: bridge
     ports:
       - 6880:6880
-    restart: unless-stopped
+    restart: always
     logging:
       driver: json-file
       options:

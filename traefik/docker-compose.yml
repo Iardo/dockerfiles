@@ -1,22 +1,19 @@
 version: "3"
 services:
    traefik:
-     image: traefik:v1.7.33-alpine
-     environment:
-       - "TRAEFIK_API_INSECURE=true"
-       - "TRAEFIK_PROVIDERS_DOCKER=true"
-       - "TRAEFIK_LOG_LEVEL=INFO"
+     image: traefik:v2.5.4
      command:
-       - "--api=true"
-       - "--docker=true"
-       - "--providers.docker.network=traefik-web"
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
      volumes:
        - "/var/run/docker.sock:/var/run/docker.sock"
        - "./traefik/traefik.toml:/traefik.toml"
        - "./traefik/acme.json:/acme.json"
      ports:
        - '80:80'
-       - '8000:80'
        - '8080:8080' # Dashboard
      labels:
       - 'traefik.backend=traefik'

@@ -1,11 +1,11 @@
 version: "3"
 services:
    adminer:
-     image: wodby/adminer:4.3-1.1.0
-     environment:
-       ADMINER_SALT: adminer-salt
+     image: emilevauge/whoami
      labels:
-       - 'traefik.backend=adminer'
+       - 'traefik.enable=true'
+       - 'traefik.backend=whoami'
        - 'traefik.port=9000'
-       - 'traefik.frontend.rule=Host:local.adminer.com'
-     container_name: adminer
+       - 'traefik.frontend.rule=Host:local.whoami.com'
+     restart: always
+     container_name: whoami
