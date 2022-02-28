@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   bin-nodejs:
     image: bin-nodejs
@@ -9,8 +8,8 @@ services:
     volumes:
       - ./binaries:/node_versions
       - ./playground:/playground
-    restart: always
     entrypoint: ["tail", "-f", "/dev/null"]
+    restart: unless-stopped
     container_name: bin_nodejs
 
 

@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   bin-python:
     image: bin-python
@@ -9,7 +8,7 @@ services:
     volumes:
       - ./binaries:/python_versions
       - ./playground:/playground
-    restart: always
+    restart: unless-stopped
     entrypoint: ["tail", "-f", "/dev/null"]
     container_name: bin_python
 

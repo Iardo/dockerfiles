@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   portainer:
     image: portainer/portainer
@@ -7,9 +7,18 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 9090:9000
+    networks:
+      - proxy
     labels:
-      - 'traefik.backend=portainer'
-      - 'traefik.port=9090'
-      - 'traefik.frontend.rule=Host:local.portainer.com'
-    restart: always
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`local.portainer.com`)"
+      - "traefik.http.routers.portainer.entrypoints=proxy"
+      - "traefik.http.routers.portainer.service=portainerservice"
+      - "traefik.http.services.portainerservice.loadbalancer.server.port=9080"
+      - "traefik.http.services.portainerservice.loadbalancer.server.scheme=http"  
+      - "traefik.docker.network=proxy"
+    restart: unless-stopped
     container_name: portainer
+
+networks:
+  proxy:

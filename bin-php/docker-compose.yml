@@ -7,7 +7,7 @@ services:
       dockerfile: dockerfile
     volumes:
       - ./playground:/playground
-    restart: always
+    restart: unless-stopped
     entrypoint: ["tail", "-f", "/dev/null"]
     container_name: bin_php
 
