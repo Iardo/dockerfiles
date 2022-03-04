@@ -1,4 +1,8 @@
 version: "3.8"
+
+volumes:
+  db_data:
+
 services:
   wikijs-postgres:
     image: postgres:11-alpine
@@ -31,6 +35,3 @@ services:
       - "traefik.http.routers.whoami.entrypoints=proxy"
     restart: unless-stopped
     container_name: wikijs
-
-volumes:
-  db_data:

@@ -1,4 +1,8 @@
 version: "3.8"
+
+networks:
+  proxy:
+
 services:
   portainer:
     image: portainer/portainer
@@ -19,6 +23,3 @@ services:
       - "traefik.docker.network=proxy"
     restart: unless-stopped
     container_name: portainer
-
-networks:
-  proxy:

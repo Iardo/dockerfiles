@@ -1,4 +1,11 @@
 version: "3.8"
+
+networks:
+  proxy:
+    # ipv4_address: 192.168.1.63
+    # https://stackoverflow.com/questions/59069029/how-to-translate-bridge-networks-in-docker-compose-v-3-7
+    # https://github.com/htpcBeginner/docker-traefik/blob/master/docker-compose-t2.yml
+
 services:
   traefik:
     image: traefik:v2.5.4
@@ -29,9 +36,3 @@ services:
       - "traefik.docker.network=proxy"
     restart: unless-stopped
     container_name: traefik
-
-networks:
-  proxy:
-    # ipv4_address: 192.168.1.63
-    # https://stackoverflow.com/questions/59069029/how-to-translate-bridge-networks-in-docker-compose-v-3-7
-    # https://github.com/htpcBeginner/docker-traefik/blob/master/docker-compose-t2.yml

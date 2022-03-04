@@ -1,4 +1,11 @@
 version: "3.8"
+
+networks:
+  local:
+
+volumes:
+  db_data:
+
 services:
   outline-redis:
     image: redis
@@ -56,8 +63,3 @@ services:
     #entrypoint: ["tail", "-f", "/dev/null"]
     restart: unless-stopped
     container_name: outline
-      
-volumes:
-  db_data:
-networks:
-  local:
