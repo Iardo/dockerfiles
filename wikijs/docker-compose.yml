@@ -19,7 +19,7 @@ services:
   wikijs:
     image: requarks/wiki:canary-2.5.243
     depends_on:
-      - db-wikijs
+      - wikijs-postgres
     environment:
       DB_TYPE: postgres
       DB_HOST: wikijs-postgres
