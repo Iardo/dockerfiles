@@ -1,0 +1,51 @@
+# set the base image to Debian
+# https://hub.docker.com/_/debian/
+FROM debian:11
+
+# replace shell with bash so we can source files
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
+# update the repository sources list
+# and install dependencies
+RUN apt-get update
+RUN apt-get install -y llvm make build-essential
+RUN apt-get install -y zlib1g-dev libbz2-dev libncurses5-dev libreadline-dev libssl-dev libsqlite3-dev
+RUN apt-get install -y curl wget git vim && \
+    apt-get -y autoclean
+
+# install python
+RUN apt-get install -y python
+
+# nvm environment variables
+ENV BASHRC "/root/.bashrc"
+ENV PYTHON_VERSION 3.9.7
+ENV PYENV_ROOT "/root/.pyenv"
+
+# install pyenv
+RUN curl --silent -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+
+# add pyenv to path so the commands are available
+RUN echo -e "\n# Configure your shell's environment for Pyenv" >> $BASHRC
+RUN echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> $BASHRC
+RUN echo 'eval "$(pyenv init -)"' >> $BASHRC
+RUN echo 'eval "$(pyenv virtualenv-init -)"' >> $BASHRC
+
+# install pyenv versions
+RUN source $BASHRC && \
+    pyenv install 2.7.18 && \
+    pyenv install 3.6.15 && \
+    pyenv install 3.8.12 && \
+    pyenv install 3.9.7 && \
+    pyenv install 3.11-dev
+
+# set default python version
+RUN source $BASHRC && \
+    pyenv global $PYTHON_VERSION
+
+# confirm installation
+RUN source $BASHRC && \
+    pyenv versions
+RUN python -V
+RUN python3 -V
+
+

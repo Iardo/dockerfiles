@@ -1,0 +1,65 @@
+version: "3.8"
+
+networks:
+  local:
+
+volumes:
+  db_data:
+
+services:
+  outline-redis:
+    image: redis
+    ports:
+      - "6479:6379"
+    networks:
+      - local
+    restart: unless-stopped
+    container_name: outline_redis
+      
+  outline-postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: outline
+      POSTGRES_PASSWORD: outline
+      POSTGRES_DB: outline
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - local
+    restart: unless-stopped
+    container_name: outline_postgres
+  outline-s3:
+    image: lphoward/fake-s3
+    ports:
+      - "4569:4569"
+    volumes:
+      - ./outline-fakes:/fakes3_root
+    networks:
+      - local
+    restart: unless-stopped
+    container_name: outline_s3
+  outline:
+    image: outlinewiki/outline:0.60.1
+    command: sh -c "npm run sequelize:migrate --env production-ssl-disabled && npm run start"
+    environment:
+      - DATABASE_URL=postgres://outline:outline@outline_postgres:5432/outline
+      - DATABASE_URL_TEST=postgres://outline:outline@outline_postgres:5432/outline-test
+      - REDIS_URL=redis://outline_redis:6479
+      - URL=http://localhost:8016
+      - PORT=8016
+      - PGSSLMODE=disable
+    ports:
+      - "8016:8016"
+    volumes:
+      - ./.env.sample:/opt/outline/.env
+    networks:
+      - local
+    depends_on:
+      - outline-redis
+      - outline-postgres
+      - outline-s3
+    #entrypoint: ["tail", "-f", "/dev/null"]
+    restart: unless-stopped
+    container_name: outline

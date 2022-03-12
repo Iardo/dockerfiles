@@ -1,0 +1,25 @@
+version: "3.8"
+
+networks:
+  proxy:
+
+services:
+  portainer:
+    image: portainer/portainer
+    command: --no-auth -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9090:9000
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`local.portainer.com`)"
+      - "traefik.http.routers.portainer.entrypoints=proxy"
+      - "traefik.http.routers.portainer.service=portainerservice"
+      - "traefik.http.services.portainerservice.loadbalancer.server.port=9080"
+      - "traefik.http.services.portainerservice.loadbalancer.server.scheme=http"  
+      - "traefik.docker.network=proxy"
+    restart: unless-stopped
+    container_name: portainer

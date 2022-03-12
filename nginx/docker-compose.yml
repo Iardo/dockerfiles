@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  svc-nginx:
+    image: wyveo/nginx-php-fpm:php74
+    volumes:
+      - ./www:/usr/share/nginx
+    ports:
+      - 85:80
+    restart: unless-stopped
+    container_name: svc_nginx
+
+

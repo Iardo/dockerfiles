@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  bin-nodejs:
+    image: bin-nodejs
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - ./binaries:/node_versions
+      - ./playground:/playground
+    entrypoint: ["tail", "-f", "/dev/null"]
+    restart: unless-stopped
+    container_name: bin_nodejs
+
+
