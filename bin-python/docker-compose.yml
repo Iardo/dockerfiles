@@ -2,6 +2,7 @@ version: '3.8'
 services:
   bin-python:
     image: bin-python
+    entrypoint: ["tail", "-f", "/dev/null"]
     build:
       context: .
       dockerfile: dockerfile
@@ -9,7 +10,6 @@ services:
       - ./binaries:/python_versions
       - ./playground:/playground
     restart: unless-stopped
-    entrypoint: ["tail", "-f", "/dev/null"]
     container_name: bin_python
 
 
