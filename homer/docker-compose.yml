@@ -12,8 +12,7 @@ services:
       - ./assets/:/www/assets
     ports:
       - 8080:8080
-    user: 
-      - 1000:1000
+    user: "1000:1000"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`local.homer.com`)"
