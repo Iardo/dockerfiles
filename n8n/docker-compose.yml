@@ -33,7 +33,7 @@ services:
     ports:
       - 5678:5678
     links:
-      - postgres
+      - n8n-postgres
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`local.n8n.com`)"
