@@ -1,0 +1,28 @@
+version: '3.8'
+
+volumes:
+  db_data:
+
+networks:
+  net:
+
+services:
+  mariadb:
+    image: mariadb:10.9.1-rc
+    cap_add:
+      - SYS_NICE
+    environment:
+      MARIADB_ALLOW_EMPTY_PASSWORD: "yes"
+      MARIADB_ROOT_PASSWORD: mariadb
+      MARIADB_USER: mariadb
+      MARIADB_PASSWORD: mariadb
+      MARIADB_DATABASE: mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./var/logs/mysql:/var/log/mysql/
+    networks:
+      - net
+    restart: unless-stopped
+    container_name: mariadb # <- server name
