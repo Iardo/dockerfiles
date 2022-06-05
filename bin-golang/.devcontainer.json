@@ -1,0 +1,39 @@
+{
+    "name": "bin_go",
+    "dockerComposeFile": "./docker-compose.yml",
+    "service": "bin-go",
+    "shutdownAction": "stopCompose",
+    "workspaceFolder": "/app",
+    "postAttachCommand": "",
+    "extensions": [
+        "golang.go",
+        "wayou.file-icons-mac",
+        "wayou.vscode-icons-mac"
+    ],
+    "settings": {
+        "[go, go.mod]": {
+            "editor.tabSize": 4
+        },
+        "breadcrumbs.enabled": true,
+        "editor.accessibilitySupport": "on",
+        "editor.defaultFormatter": "golang.go",
+        "editor.detectIndentation": true,
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.wordWrap": "off",
+        "editor.quickSuggestions": {
+            "comments": true,
+            "other": true,
+            "strings": true
+        },
+        "search.quickOpen.includeHistory": false,
+        "search.useGlobalIgnoreFiles": true,
+        "search.useIgnoreFiles": true,
+        "telemetry.enableTelemetry": false,
+        "terminal.integrated.scrollback": 10000,
+        "terminal.integrated.defaultProfile.linux": "/bin/bash",
+        "workbench.editor.showTabs": true,
+        "workbench.editor.tabCloseButton": "left"
+    },
+    "remoteEnv": {}
+}
