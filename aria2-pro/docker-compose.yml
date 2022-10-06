@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.2"
 services:
   aria2-pro:
     image: p3terx/aria2-pro
