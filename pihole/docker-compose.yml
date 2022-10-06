@@ -1,4 +1,4 @@
-version: "3.5"
+version: "3.2"
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
@@ -6,9 +6,10 @@ services:
     image: pihole/pihole:latest
     # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
     ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+      # Change the ip binding to the correct ip
+      - "192.168.0.1:53:53/tcp" # DNS
+      - "192.168.0.1:53:53/udp" # DNS
+      - "192.168.0.1:67:67/udp" # Only required if you are using Pi-hole as your DHCP server
       - "80:80/tcp"
     environment:
       TZ: 'America/Panama'
