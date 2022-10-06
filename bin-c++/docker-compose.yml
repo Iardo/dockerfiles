@@ -1,12 +1,12 @@
-version: '3.8'
+version: '3.2'
 services:
-  bin-nodejs:
+  bin-cplusplus:
     image: bin-cplusplus
+    entrypoint: ["tail", "-f", "/dev/null"]
     build:
       context: .
       dockerfile: dockerfile
     volumes:
       - ./playground:/playground
-    entrypoint: ["tail", "-f", "/dev/null"]
     container_name: bin_cplusplus
 

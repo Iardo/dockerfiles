@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.2"
 
 volumes:
   db_data:
@@ -16,6 +16,7 @@ services:
       - db_data:/var/lib/postgresql/data
     restart: unless-stopped
     container_name: wikijs_db
+    
   wikijs:
     image: requarks/wiki:canary-2.5.243
     depends_on:

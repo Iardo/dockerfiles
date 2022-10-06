@@ -1,0 +1,22 @@
+version: '3.2'
+
+networks:
+  net:
+
+services:
+  wordpress:
+    image: wordpress:php8.1-fpm
+    environment:
+      WORDPRESS_DB_HOST: wordpress-mariadb
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    volumes:
+      - ./web:/var/www/html
+      - ./var/logs/nginx:/var/log/nginx
+    ports:
+      - 85:80
+    networks:
+       - net
+    restart: unless-stopped
+    container_name: wordpress

@@ -1,7 +1,6 @@
-version: '3'
+version: '3.2'
 services:
   homeassistant:
-    container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
       - ./config:/config
@@ -11,3 +10,4 @@ services:
     restart: unless-stopped
     privileged: true
     # network_mode: host
+    container_name: homeassistant

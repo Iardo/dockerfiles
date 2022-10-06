@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.2"
 
 networks:
   local:
@@ -15,7 +15,7 @@ services:
       - local
     restart: unless-stopped
     container_name: outline_redis
-      
+    
   outline-postgres:
     image: postgres
     environment:
@@ -30,6 +30,7 @@ services:
       - local
     restart: unless-stopped
     container_name: outline_postgres
+    
   outline-s3:
     image: lphoward/fake-s3
     ports:
@@ -40,8 +41,10 @@ services:
       - local
     restart: unless-stopped
     container_name: outline_s3
+
   outline:
     image: outlinewiki/outline:0.60.1
+    #entrypoint: ["tail", "-f", "/dev/null"]
     command: sh -c "npm run sequelize:migrate --env production-ssl-disabled && npm run start"
     environment:
       - DATABASE_URL=postgres://outline:outline@outline_postgres:5432/outline
@@ -60,6 +63,5 @@ services:
       - outline-redis
       - outline-postgres
       - outline-s3
-    #entrypoint: ["tail", "-f", "/dev/null"]
     restart: unless-stopped
     container_name: outline

@@ -1,0 +1,11 @@
+version: "3.2"
+services:
+  bin-go:
+    build:
+      dockerfile: dockerfile
+      context: .
+      target: development
+    volumes:
+      - .:/app
+    restart: on-failure
+    container_name: bin_go

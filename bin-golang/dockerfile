@@ -1,0 +1,15 @@
+# BUILDER
+FROM golang:1.18.3 AS builder
+RUN mkdir /app
+ADD . /app
+WORKDIR /app
+
+# CONFIGURATION
+# ENV GOROOT /usr/lib/go
+# ENV GOPATH /go
+# ENV PATH /go/bin:$PATH
+
+# DEVELOPMENT
+FROM builder AS development
+RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+CMD ["air"]

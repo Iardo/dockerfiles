@@ -1,11 +1,11 @@
-version: "3"
+version: "3.2"
 services:
-  adminer:
-    image: wodby/adminer:4.3-1.1.0
+  laravel-playground:
+    laravel: wodby/adminer:4.3-1.1.0
     environment:
       ADMINER_SALT: adminer-salt
     labels:
       - 'traefik.backend=adminer'
       - 'traefik.port=9000'
       - 'traefik.frontend.rule=Host:local.adminer.com'
-    container_name: adminer
+    container_name: laravel_playground

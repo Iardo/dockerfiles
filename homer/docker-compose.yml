@@ -1,0 +1,21 @@
+version: "3.2"
+services:
+  homer:
+    image: b4bz/homer
+    #To build from source, comment previous line and uncomment below
+    # build:
+    #   context: .
+    #   dockerfile: dockerfile
+    environment:
+      - INIT_ASSETS=1
+    volumes:
+      - ./assets/:/www/assets
+    ports:
+      - 80:8080
+    user: root
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`local.homer.com`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+    restart: unless-stopped
+    container_name: homer

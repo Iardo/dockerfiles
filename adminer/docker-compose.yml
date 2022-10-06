@@ -1,13 +1,35 @@
-version: "3"
+version: "3.2"
 
 networks:
   proxy:
 
 services:
   adminer:
-    image: wodby/adminer:4.3-1.1.0
+    image: adminer:4.8.1-standalone
     environment:
+      ADMINER_AUTOLOGIN: 1
+      ADMINER_NAME: Sinispa
       ADMINER_SALT: adminer-salt
+      # Drivers
+        # MySQL         | server
+        # SQLite 3      | sqlite
+        # SQLite 2      | sqlite2
+        # PostgreSQL    | pgsql
+        # Oracle        | oracle
+        # MS SQL        | mssql
+        # Firebird      | firebird
+        # SimpleDB      | simpledb
+        # MongoDB       | mongo
+        # Elasticsearch | elastic
+      ADMINER_DRIVER: server
+      ADMINER_SERVER: adminer_mysql
+      ADMINER_USERNAME: adminer
+      ADMINER_PASSWORD: adminer
+      ADMINER_DB: adminer
+      # ADMINER_DEFAULT_SERVER: adminer-mysql
+      # ADMINER_DEFAULT_USERNAME: adminer
+      # ADMINER_DEFAULT_PASSWORD: adminer
+      # ADMINER_DEFAULT_DATABASE: adminer
     ports:
       - 9080:8080
     networks:

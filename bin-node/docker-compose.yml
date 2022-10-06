@@ -1,14 +1,14 @@
-version: '3.8'
+version: '3.2'
 services:
   bin-nodejs:
     image: bin-nodejs
+    entrypoint: ["tail", "-f", "/dev/null"]
     build:
       context: .
       dockerfile: dockerfile
     volumes:
       - ./binaries:/node_versions
       - ./playground:/playground
-    entrypoint: ["tail", "-f", "/dev/null"]
     restart: unless-stopped
     container_name: bin_nodejs
 
