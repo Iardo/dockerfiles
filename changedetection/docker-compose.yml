@@ -16,7 +16,7 @@ services:
       #   webdriver_proxyAutoconfigUrl, webdriver_sslProxy, webdriver_autodetect,
       #   webdriver_socksProxy, webdriver_socksUsername, webdriver_socksVersion, webdriver_socksPassword
       #   https://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.common.proxy
-      # Plain requsts - proxy support example.
+      # Plain requests - proxy support example.
       # - HTTP_PROXY=socks5h://10.10.1.10:1080
       # - HTTPS_PROXY=socks5h://10.10.1.10:1080
       # An exclude list (useful for notification URLs above) can be specified by with
@@ -41,13 +41,32 @@ services:
   #   hostname: browser-chrome
   #   image: selenium/standalone-chrome-debug:3.141.59
   #   environment:
-  #       - VNC_NO_PASSWORD=1
-  #       - SCREEN_WIDTH=1920
-  #       - SCREEN_HEIGHT=1080
-  #       - SCREEN_DEPTH=24
+  #     - VNC_NO_PASSWORD=1
+  #     - SCREEN_WIDTH=1920
+  #     - SCREEN_HEIGHT=1080
+  #     - SCREEN_DEPTH=24
   #   volumes:
-  #       # Workaround to avoid the browser crashing inside a docker container
-  #       # See https://github.com/SeleniumHQ/docker-selenium#quick-start
-  #       - /dev/shm:/dev/shm
+  #     # Workaround to avoid the browser crashing inside a docker container
+  #     # See https://github.com/SeleniumHQ/docker-selenium#quick-start
+  #     - /dev/shm:/dev/shm
   #   restart: unless-stopped
   #   container_name: changedetection_chrome
+
+
+  # Used for fetching pages via Playwright+Chrome where you need Javascript support.
+
+  # playwright-chrome:
+  #   hostname: playwright-chrome
+  #   image: browserless/chrome
+  #   restart: unless-stopped
+  #   environment:
+  #     - SCREEN_WIDTH=1920
+  #     - SCREEN_HEIGHT=1024
+  #     - SCREEN_DEPTH=16
+  #     - ENABLE_DEBUGGER=false
+  #     - PREBOOT_CHROME=true
+  #     - CONNECTION_TIMEOUT=300000
+  #     - MAX_CONCURRENT_SESSIONS=10
+  #     - CHROME_REFRESH_TIME=600000
+  #     - DEFAULT_BLOCK_ADS=true
+  #     - DEFAULT_STEALTH=true
