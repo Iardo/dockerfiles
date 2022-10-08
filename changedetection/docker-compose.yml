@@ -4,7 +4,7 @@ volumes:
   changedetection-data:
 
 services:
-  speedtest-tracker:
+  changedetection:
     image: ghcr.io/dgtlmoon/changedetection.io
     environment:
       - PORT=5000
