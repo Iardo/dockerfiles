@@ -1,47 +1,26 @@
-version: "3.2"
+version: "2.1"
 
 services:
   jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
-    image: linuxserver/jellyfin
-    restart: always
     devices:
      - /dev/dri:/dev/dri
-    networks:
-      - traefik_proxy
-    ports:
-      - "8097:8096"
-      - "8921:8920"
-    volumes:
-      #- /mnt/storage/movies:/MOVIES:ro
-      - /mnt/m/Multimedia-C/Series/Anime:/TVSHOWS:ro
-      #- /mnt/storage/concerts:/CONCERTS:ro
-      - ${USERDIR}/docker/jellyfin:/config
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Panama
       - UMASK_SET=022
-    labels:
-      - "traefik.enable=true"
-      - "traefik.backend=jellyfin"
-      - "traefik.frontend.rule=Host:jellyfin.${DOMAINNAME}"
-      - "traefik.port=8096"
-      - "traefik.docker.network=traefik_proxy"
-      - "traefik.frontend.headers.SSLRedirect=true"
-      - "traefik.frontend.headers.STSSeconds=315360000"
-      - "traefik.frontend.headers.browserXSSFilter=true"
-      - "traefik.frontend.headers.contentTypeNosniff=true"
-      - "traefik.frontend.headers.forceSTSHeader=true"
-      - "traefik.frontend.headers.SSLHost=jellyfin.${DOMAINNAME}"
-      - "traefik.frontend.headers.SSLForceHost=true"
-      - "traefik.frontend.headers.STSIncludeSubdomains=true"
-      - "traefik.frontend.headers.STSPreload=true"
-      - "traefik.frontend.headers.customResponseHeaders: X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex"
-      - "traefik.frontend.headers.frameDeny=true"
-
-networks:
-  traefik_proxy:
-    external:
-      name: traefik_proxy
+    volumes:
+      - ./config:/config
+      - /mnt/m/Multimedia-C/Film/3D:/MOVIES/3D
+      - /mnt/m/Multimedia-C/Film/Anime:/MOVIES/Anime
+      - /mnt/m/Multimedia-C/Film/Cartoon:/MOVIES/Cartoon
+      - /mnt/m/Multimedia-C/Series/Anime:/SERIES/Anime
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: unless-stopped
 
