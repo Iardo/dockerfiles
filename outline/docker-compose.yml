@@ -1,67 +1,71 @@
 version: "3.2"
-
-networks:
-  local:
-
-volumes:
-  db_data:
-
 services:
-  outline-redis:
-    image: redis
+
+  outline:
+    image: docker.getoutline.com/outlinewiki/outline:0.72.0
+    env_file: ./docker.env
     ports:
-      - "6479:6379"
-    networks:
-      - local
-    restart: unless-stopped
-    container_name: outline_redis
-    
-  outline-postgres:
+      - "8016:3000"
+    volumes:
+      - storage-data:/var/lib/outline/data
+    depends_on:
+      - postgres
+      - redis
+
+  redis:
+    image: redis
+    env_file: ./docker.env
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis.conf:/redis.conf
+    command: ["redis-server", "/redis.conf"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+
+  postgres:
     image: postgres
-    environment:
-      POSTGRES_USER: outline
-      POSTGRES_PASSWORD: outline
-      POSTGRES_DB: outline
+    env_file: ./docker.env
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
-    networks:
-      - local
-    restart: unless-stopped
-    container_name: outline_postgres
-    
-  outline-s3:
-    image: lphoward/fake-s3
-    ports:
-      - "4569:4569"
-    volumes:
-      - ./outline-fakes:/fakes3_root
-    networks:
-      - local
-    restart: unless-stopped
-    container_name: outline_s3
-
-  outline:
-    image: outlinewiki/outline:0.60.1
-    #entrypoint: ["tail", "-f", "/dev/null"]
-    command: sh -c "npm run sequelize:migrate --env production-ssl-disabled && npm run start"
+      - database-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "outline", "-U", "user"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
     environment:
-      - DATABASE_URL=postgres://outline:outline@outline_postgres:5432/outline
-      - DATABASE_URL_TEST=postgres://outline:outline@outline_postgres:5432/outline-test
-      - REDIS_URL=redis://outline_redis:6479
-      - URL=http://localhost:8016
-      - PORT=8016
-      - PGSSLMODE=disable
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'pass'
+      POSTGRES_DB: 'outline'
+
+  https-portal:
+    image: steveltn/https-portal
+    env_file: ./docker.env
     ports:
-      - "8016:8016"
+      - '80:80'
+      - '443:443'
+    links:
+      - outline
+    restart: always
     volumes:
-      - ./.env.sample:/opt/outline/.env
-    networks:
-      - local
-    depends_on:
-      - outline-redis
-      - outline-postgres
-      - outline-s3
-    restart: unless-stopped
-    container_name: outline
+      - https-portal-data:/var/lib/https-portal
+    healthcheck:
+      test: ["CMD", "service", "nginx", "status"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    environment:
+      DOMAINS: 'docs.mycompany.com -> http://outline:3000'
+      STAGE: 'production'
+      WEBSOCKET: 'true'
+      CLIENT_MAX_BODY_SIZE: '0'
+
+volumes:
+  https-portal-data:
+  storage-data:
+  database-data:
