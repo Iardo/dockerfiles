@@ -10,19 +10,20 @@ if ! [ -d source ]; then
 fi
 
 if ! [ -f .env ]; then
-  cp .env.example ./source/.env
+  ln -s .env.example .env
+  ln -s .env.example ./source/env
 fi
 if ! [ -f ./source/admin/.env ]; then
-  cp .env.example.admin ./source/admin/.env
+  ln -s .env.example.admin ./source/admin/.env
 fi
 if ! [ -f ./source/apiserver/.env ]; then
-  cp .env.example.apiserver ./source/apiserver/.env
+  ln -s .env.example.apiserver ./source/apiserver/.env
 fi
 if ! [ -f ./source/space/.env ]; then
-  cp .env.example.space ./source/space/.env
+  ln -s .env.example.space ./source/space/.env
 fi
 if ! [ -f ./source/web/.env ]; then
-  cp .env.example.web ./source/web/.env
+  ln -s .env.example.web ./source/web/.env
 fi
 
 # Generate the SECRET_KEY that will be used by django
