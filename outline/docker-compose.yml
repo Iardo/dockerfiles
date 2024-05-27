@@ -1,5 +1,8 @@
 version: "3.2"
 
+networks:
+  outline:
+
 volumes:
   database-data:
   https-portal-data:
@@ -10,6 +13,8 @@ services:
     container_name: outline
     image: docker.getoutline.com/outlinewiki/outline:0.72.0
     env_file: ./.env
+    networks:
+      - outline
     ports:
       - "8005:3000"
     volumes:
@@ -20,8 +25,10 @@ services:
 
   postgres:
     container_name: outline_postgres
-    image: postgres
+    image: postgres:16-alpine
     env_file: ./.env
+    networks:
+      - outline
     ports:
       - "8006:5432"
     volumes:
@@ -38,8 +45,10 @@ services:
 
   redis:
     container_name: outline_redis
-    image: redis
+    image: redis:7.2.5-alpine
     env_file: ./.env
+    networks:
+      - outline
     ports:
       - "8007:6379"
     volumes:
@@ -53,8 +62,10 @@ services:
 
   https-portal:
     container_name: outline_ssl
-    image: steveltn/https-portal
+    image: steveltn/https-portal:1
     env_file: ./.env
+    networks:
+      - outline
     ports:
       - '8008:80'  # HTTP
       - '8009:443' # HTTPS
@@ -68,7 +79,7 @@ services:
       timeout: 20s
       interval: 30s
     environment:
-      DOMAINS: 'docs.mycompany.com -> http://outline:8005'
+      DOMAINS: 'docs.outline.com -> http://outline:8005'
       STAGE: 'production'
       WEBSOCKET: 'true'
       CLIENT_MAX_BODY_SIZE: '0'
