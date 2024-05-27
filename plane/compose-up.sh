@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ROOT="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
 # Export for tr error in mac
 export LC_ALL=C
 export LC_CTYPE=C
@@ -10,20 +12,20 @@ if ! [ -d source ]; then
 fi
 
 if ! [ -f .env ]; then
-  ln -s .env.example .env
-  ln -s .env.example ./source/env
+  ln -s $ROOT/.env.example $ROOT/.env
+  ln -s $ROOT/.env.example $ROOT/source/.env
 fi
 if ! [ -f ./source/admin/.env ]; then
-  ln -s .env.example.admin ./source/admin/.env
+  ln -s $ROOT/.env.example.admin $ROOT/source/admin/.env
 fi
 if ! [ -f ./source/apiserver/.env ]; then
-  ln -s .env.example.apiserver ./source/apiserver/.env
+  ln -s $ROOT/.env.example.apiserver $ROOT/source/apiserver/.env
 fi
 if ! [ -f ./source/space/.env ]; then
-  ln -s .env.example.space ./source/space/.env
+  ln -s $ROOT/.env.example.space $ROOT/source/space/.env
 fi
 if ! [ -f ./source/web/.env ]; then
-  ln -s .env.example.web ./source/web/.env
+  ln -s $ROOT/.env.example.web $ROOT/source/web/.env
 fi
 
 # Generate the SECRET_KEY that will be used by django
