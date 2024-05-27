@@ -171,7 +171,7 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - database-data:/var/lib/postgresql/data
     command: postgres -c 'max_connections=1000'
     env_file:
       - .env
