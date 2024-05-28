@@ -1,3 +1,5 @@
+version: "3.2"
+
 x-app-env: &app-env
   environment:
     - NGINX_PORT=${NGINX_PORT:-80}
@@ -17,7 +19,7 @@ x-app-env: &app-env
     - POSTGRES_PORT=${POSTGRES_PORT:-5432}
     - PGDATA=${PGDATA:-/var/lib/postgresql/data}
     - DATABASE_URL=${DATABASE_URL:-postgresql://plane:plane@plane-db/plane}
-    # REDIS SETTINGS8010
+    # REDIS SETTINGS
     - REDIS_HOST=${REDIS_HOST:-plane-redis}
     - REDIS_PORT=${REDIS_PORT:-6379}
     - REDIS_URL=${REDIS_URL:-redis://plane-redis:6379/}
@@ -144,6 +146,7 @@ services:
     image: ${DOCKERHUB_USER:-makeplane}/plane-backend:${APP_RELEASE:-stable}
     platform: ${DOCKER_PLATFORM:-}
     pull_policy: ${PULL_POLICY:-always}
+    restart: "no"
     command: ./bin/docker-entrypoint-migrator.sh
     volumes:
       - logs_migrator:/code/plane/logs
