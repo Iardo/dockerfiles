@@ -24,7 +24,7 @@ services:
       - redis
 
   postgres:
-    container_name: outline_postgres
+    container_name: outline-postgres
     image: postgres:16-alpine
     env_file: ./.env
     networks:
@@ -44,7 +44,7 @@ services:
       POSTGRES_DB: 'outline'
 
   redis:
-    container_name: outline_redis
+    container_name: outline-redis
     image: redis:7.2.5-alpine
     env_file: ./.env
     networks:
@@ -61,7 +61,7 @@ services:
       interval: 10s
 
   https-portal:
-    container_name: outline_ssl
+    container_name: outline-ssl
     image: steveltn/https-portal:1
     env_file: ./.env
     networks:
