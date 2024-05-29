@@ -5,7 +5,7 @@ volumes:
 
 services:
   atomic-server:
-    container_name: atomic-sever
+    container_name: atomic-server
     image: docker.getoutline.com/joepmeneer/atomic-server:v0.37.0
     ports:
       - "8020:3000"
