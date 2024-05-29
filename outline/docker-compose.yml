@@ -11,7 +11,7 @@ volumes:
 services:
   outline:
     container_name: outline
-    image: docker.getoutline.com/outlinewiki/outline:0.72.0
+    image: docker.getoutline.com/outlinewiki/outline:0.76.1
     env_file: ./.env
     networks:
       - outline
