@@ -1,0 +1,13 @@
+version: "3.2"
+
+volumes:
+  atomic-server-storage:
+
+services:
+  atomic-server:
+    container_name: atomic-sever
+    image: docker.getoutline.com/joepmeneer/atomic-server:v0.37.0
+    ports:
+      - "8020:3000"
+    volumes:
+      - atomic-server-storage:/atomic-storage
