@@ -74,11 +74,11 @@ services:
   web:
     <<: *app
     container_name: openproject-web
-    command: "./docker/prod/web"
+    command: ["./docker/prod/web", "bundle exec rake db:seed"]
     depends_on:
       - db
       - cache
-      - seeder
+      # - seeder
     networks:
       - frontend
       - backend
@@ -125,10 +125,10 @@ services:
       - cache
       - seeder
 
-  seeder:
-    <<: *app
-    container_name: openproject-seeder
-    command: "./docker/prod/seeder"
-    restart: on-failure
-    networks:
-      - backend
+  # seeder:
+  #   <<: *app
+  #   container_name: openproject-seeder
+  #   command: "./docker/prod/seeder"
+  #   restart: on-failure
+  #   networks:
+  #     - backend
