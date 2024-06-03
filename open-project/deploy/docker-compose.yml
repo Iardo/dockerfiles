@@ -70,7 +70,7 @@ services:
   web:
     <<: *app
     container_name: openproject-web
-    command: "./docker/prod/web"
+    command: ["./docker/prod/web", "bundle exec rake db:seed"]
     depends_on:
       - database
       - cache

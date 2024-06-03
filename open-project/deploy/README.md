@@ -37,6 +37,26 @@ OPENPROJECT_HTTPS=false
 ```
 
 
+## Admin User
+
+The default username and password is login: `admin`, and password: `admin`.
+
+In a manual installation, you will need to ssh to the web container and run
+`bundle exec rake db:seed`
+
+To change the password manually run the following commands inside the container
+
+```shell
+RAILS_ENV=production bundle exec rails c 
+# Wait until the Ruby REPL finish loading...
+admin = User.find_by(login: 'admin')
+admin.password = 'mynewpassword1234'
+# Must confirm to the password
+admin.password_confirmation = 'mynewpassword1234'
+admin.save!
+# Watch the output for errors
+```
+
 ## Configuration
 
 Environment variables can be added to `docker-compose.yml` under `x-op-app -> environment` to change
