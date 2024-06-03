@@ -13,7 +13,7 @@ volumes:
 services:
   backup:
     container_name: openproject-backup
-    entrypoint: ["backup-entrypoint.sh"]
+    entrypoint: ["/control/backup-entrypoint.sh"]
     restart: "no"
     build:
       context: .
@@ -28,7 +28,7 @@ services:
       - "${OPDATA:-opdata}:/var/openproject/assets"
   upgrade:
     container_name: openproject-upgrade
-    entrypoint: ["upgrade-entrypoint.sh"]
+    entrypoint: ["/control/upgrade-entrypoint.sh"]
     restart: "no"
     build:
       context: .
