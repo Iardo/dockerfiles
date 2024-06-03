@@ -62,7 +62,7 @@ services:
       - frontend
     volumes:
       - ./caddyfile.template:/etc/caddy/Caddyfile.template:ro
-      - ./proxy-entrypoint.sh:/usr/local/bin/proxy-entrypoint.sh:ro
+      - ./caddyfile.proxy.sh:/usr/local/bin/caddyfile.proxy.sh:ro
       - assets:/public:ro
     environment:
       APP_HOST: web
