@@ -23,7 +23,7 @@ services:
       OPDATA: /var/openproject/assets
     volumes:
       - "./backups:/backups"
-      - "./:/control"
+      - ".:/control"
       - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
       - "${OPDATA:-opdata}:/var/openproject/assets"
   upgrade:
@@ -36,5 +36,5 @@ services:
     environment:
       PGDATA: /var/lib/postgresql/data
     volumes:
-      - "./:/control"
+      - ".:/control"
       - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
