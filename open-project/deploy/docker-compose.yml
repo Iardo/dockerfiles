@@ -1,0 +1,130 @@
+x-op-image: &image
+  image: openproject/openproject:${TAG:-14-slim}
+x-op-restart-policy: &restart_policy
+  restart: unless-stopped
+x-op-app: &app
+  <<: [*image, *restart_policy]
+  environment:
+    # set to true to enable the email receiving feature. See ./docker/cron for more options
+    IMAP_ENABLED: "${IMAP_ENABLED:-false}"
+    DATABASE_URL: "${DATABASE_URL:-postgres://postgres:p4ssw0rd@database/openproject?pool=20&encoding=unicode&reconnect=true}"
+    OPENPROJECT_HTTPS: "${OPENPROJECT_HTTPS:-true}"
+    OPENPROJECT_HOST__NAME: "${OPENPROJECT_HOST__NAME:-localhost:8080}"
+    OPENPROJECT_HSTS: "${OPENPROJECT_HSTS:-true}"
+    OPENPROJECT_CACHE__MEMCACHE__SERVER: "cache:11211"
+    OPENPROJECT_RAILS__RELATIVE__URL__ROOT: "${OPENPROJECT_RAILS__RELATIVE__URL__ROOT:-}"
+    RAILS_CACHE_STORE: "memcache"
+    RAILS_MIN_THREADS: ${RAILS_MIN_THREADS:-4}
+    RAILS_MAX_THREADS: ${RAILS_MAX_THREADS:-16}
+  volumes:
+    - "${OPDATA:-opdata}:/var/openproject/assets"
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  pgdata:
+  opdata:
+  assets:
+
+services:
+  database:
+    <<: *restart_policy
+    container_name: openproject-database
+    image: postgres:13
+    stop_grace_period: "3s"
+    volumes:
+      - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
+    networks:
+      - backend
+    environment:
+      POSTGRES_database: openproject
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-p4ssw0rd}
+
+  cache:
+    <<: *restart_policy
+    container_name: openproject-cache
+    image: memcached
+    networks:
+      - backend
+
+  proxy:
+    <<: *restart_policy
+    container_name: openproject-proxy
+    image: caddy:2
+    command: "/usr/local/bin/caddyfile.proxy.sh"
+    depends_on:
+      - web
+    ports:
+      - "${PORT:-8080}:80"
+    networks:
+      - frontend
+    volumes:
+      - ./caddyfile.template:/etc/caddy/Caddyfile.template:ro
+      - ./proxy-entrypoint.sh:/usr/local/bin/proxy-entrypoint.sh:ro
+      - assets:/public:ro
+    environment:
+      APP_HOST: web
+
+  web:
+    <<: *app
+    container_name: openproject-web
+    command: "./docker/prod/web"
+    depends_on:
+      - database
+      - cache
+      - seeder
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - assets:/app/public
+    labels:
+      - autoheal=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080${OPENPROJECT_RAILS__RELATIVE__URL__ROOT:-}/health_checks/default"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+  autoheal:
+    container_name: openproject-autoheal
+    image: willfarrell/autoheal:1.2.0
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      AUTOHEAL_CONTAINER_LABEL: autoheal
+      AUTOHEAL_INTERVAL: 30
+      AUTOHEAL_START_PERIOD: 600
+
+  worker:
+    <<: *app
+    container_name: openproject-worker
+    command: "./docker/prod/worker"
+    networks:
+      - backend
+    depends_on:
+      - database
+      - cache
+      - seeder
+
+  cron:
+    <<: *app
+    container_name: openproject-cron
+    command: "./docker/prod/cron"
+    networks:
+      - backend
+    depends_on:
+      - database
+      - cache
+      - seeder
+
+  seeder:
+    <<: *app
+    container_name: openproject-seeder
+    command: "./docker/prod/seeder"
+    restart: on-failure
+    networks:
+      - backend

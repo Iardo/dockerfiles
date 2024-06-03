@@ -1,0 +1,14 @@
+# ignore these folders:
+# ignore these files:
+.env
+.env.development.local
+.env.local
+.env.production.local
+.env.test.local
+
+# ------------------------------------------------------------------------------
+# include these folders:
+!/.idea/
+!/.vscode/
+
+# include these files:

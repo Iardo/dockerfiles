@@ -1,0 +1,55 @@
+version: "3.7"
+
+volumes:
+  pgupgrade:
+
+services:
+  backup:
+    container_name: openproject-backup
+    entrypoint: ["backup-entrypoint.sh"]
+    restart: "no"
+    build:
+      context: .
+      dockerfile: dockerfile
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      OPDATA: /var/openproject/assets
+    volumes:
+      - "./backups:/backups"
+      - "./control:/control"
+      - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
+      - "${OPDATA:-opdata}:/var/openproject/assets"
+  upgrade:
+    container_name: openproject-upgrade
+    entrypoint: ["upgrade-entrypoint.sh"]
+    restart: "no"
+    build:
+      context: .
+      dockerfile: dockerfile
+    environment:
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - "./control:/control"
+      - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
+
+  database:
+    restart: "no"
+    entrypoint: ["echo", "disabled"]
+  web:
+    restart: "no"
+    entrypoint: ["echo", "disabled"]
+  worker:
+    restart: "no"
+    entrypoint: ["echo", "disabled"]
+  cron:
+    restart: "no"
+    entrypoint: ["echo", "disabled"]
+  seeder:
+    restart: "no"
+    entrypoint: ["echo", "disabled"]
+  proxy:
+    restart: "no"
+    entrypoint: ["echo", "disabled"]
+  cache:
+    restart: "no"
+    entrypoint: ["echo", "disabled"]
