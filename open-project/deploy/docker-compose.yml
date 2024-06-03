@@ -74,15 +74,16 @@ services:
   web:
     <<: *app
     container_name: openproject-web
-    command: [sh, -c, "RAILS_ENV=production bundle exec rake db:seed && ./docker/prod/web"]
+    command: [sh, -c, "RAILS_ENV=production bundle exec rails runner /usr/local/bin/compose-seeder.rb && ./docker/prod/web"]
     depends_on:
       - db
       - cache
-      # - seeder
+      - seeder
     networks:
       - frontend
       - backend
     volumes:
+      - ./compose-seeder.rb:/usr/local/bin/compose-seeder.rb:ro
       - assets:/app/public
     labels:
       - autoheal=true
@@ -112,7 +113,7 @@ services:
     depends_on:
       - db
       - cache
-      # - seeder
+      - seeder
 
   cron:
     <<: *app
@@ -123,12 +124,12 @@ services:
     depends_on:
       - db
       - cache
-      # - seeder
+      - seeder
 
-  # seeder:
-  #   <<: *app
-  #   container_name: openproject-seeder
-  #   command: "./docker/prod/seeder"
-  #   restart: on-failure
-  #   networks:
-  #     - backend
+  seeder:
+    <<: *app
+    container_name: openproject-seeder
+    command: "./docker/prod/seeder"
+    restart: on-failure
+    networks:
+      - backend
