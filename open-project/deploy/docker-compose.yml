@@ -53,7 +53,7 @@ services:
     <<: *restart_policy
     container_name: openproject-proxy
     image: caddy:2
-    command: "/usr/local/bin/caddyfile.proxy.sh"
+    command: "sh /usr/local/bin/caddyfile.proxy.sh"
     depends_on:
       - web
     ports:
