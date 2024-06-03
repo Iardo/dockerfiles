@@ -2,6 +2,13 @@ version: "3.7"
 
 volumes:
   pgupgrade:
+    name: openproject-pgupgrade
+  pgdata:
+    name: openproject-pgdata
+  opdata:
+    name: openproject-opdata
+  assets:
+    name: openproject-assets
 
 services:
   backup:
@@ -31,25 +38,3 @@ services:
     volumes:
       - "./:/control"
       - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
-
-  db:
-    restart: "no"
-    entrypoint: ["echo", "disabled"]
-  web:
-    restart: "no"
-    entrypoint: ["echo", "disabled"]
-  worker:
-    restart: "no"
-    entrypoint: ["echo", "disabled"]
-  cron:
-    restart: "no"
-    entrypoint: ["echo", "disabled"]
-  seeder:
-    restart: "no"
-    entrypoint: ["echo", "disabled"]
-  proxy:
-    restart: "no"
-    entrypoint: ["echo", "disabled"]
-  cache:
-    restart: "no"
-    entrypoint: ["echo", "disabled"]

@@ -25,12 +25,17 @@ x-op-app: &app
 
 networks:
   frontend:
+    name: openproject-frontend
   backend:
+    name: openproject-backend
 
 volumes:
   pgdata:
+    name: openproject-pgdata
   opdata:
+    name: openproject-opdata
   assets:
+    name: openproject-assets
 
 services:
   db:
