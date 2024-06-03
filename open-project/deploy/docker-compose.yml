@@ -112,7 +112,7 @@ services:
     depends_on:
       - db
       - cache
-      - seeder
+      # - seeder
 
   cron:
     <<: *app
@@ -123,7 +123,7 @@ services:
     depends_on:
       - db
       - cache
-      - seeder
+      # - seeder
 
   # seeder:
   #   <<: *app
