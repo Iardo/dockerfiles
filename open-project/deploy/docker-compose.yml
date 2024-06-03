@@ -61,7 +61,7 @@ services:
     networks:
       - frontend
     volumes:
-      - ./caddyfile.template:/etc/caddy/Caddyfile.template:ro
+      - ./caddyfile.template:/etc/caddy/caddyfile.template:ro
       - ./caddyfile.proxy.sh:/usr/local/bin/caddyfile.proxy.sh:ro
       - assets:/public:ro
     environment:
