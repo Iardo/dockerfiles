@@ -32,7 +32,7 @@ services:
       - "./control:/control"
       - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
 
-  database:
+  db:
     restart: "no"
     entrypoint: ["echo", "disabled"]
   web:
