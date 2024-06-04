@@ -5,15 +5,18 @@ volumes:
     name: openproject-pgupgrade
   pgdata:
     name: openproject-pgdata
+    external: true
   opdata:
     name: openproject-opdata
+    external: true
   assets:
     name: openproject-assets
+    external: true
 
 services:
   backup:
     container_name: openproject-backup
-    entrypoint: ["/control/backup-entrypoint.sh"]
+    entrypoint: ["tail", "-f", "/dev/null"]
     restart: "no"
     build:
       context: .
@@ -23,12 +26,12 @@ services:
       OPDATA: /var/openproject/assets
     volumes:
       - "./backups:/backups"
-      - ".:/control"
+      - "./:/control"
       - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
       - "${OPDATA:-opdata}:/var/openproject/assets"
   upgrade:
     container_name: openproject-upgrade
-    entrypoint: ["/control/upgrade-entrypoint.sh"]
+    entrypoint: ["tail", "-f", "/dev/null"]
     restart: "no"
     build:
       context: .
@@ -36,5 +39,5 @@ services:
     environment:
       PGDATA: /var/lib/postgresql/data
     volumes:
-      - ".:/control"
+      - "./:/control"
       - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
