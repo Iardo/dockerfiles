@@ -1,13 +1,17 @@
 #!/bin/bash
 set -e
 
-timestamp=$(date +%s)
-mkdir -p /backups
+timestamp=$(date +"%Y.%m.%d-%H.%M.%S")
+pgdata="${timestamp}-pgdata.tar.gz"
+opdata="${timestamp}-opdata.tar.gz"
+
+if ! [ -d /backups ]; then
+  mkdir -p /backups
+fi
+
 cd /backups
-filename="${timestamp}-pgdata.tar.gz"
 echo "Backing up PostgreSQL data into backups/${filename}..."
-tar czf "${filename}" -C "$PGDATA" .
-filename="${timestamp}-opdata.tar.gz"
+tar czf "${pgdata}" -C "$PGDATA" .
 echo "Backing up OpenProject assets into backups/${filename}..."
-tar czf "${filename}" -C "$OPDATA" .
+tar czf "${opdata}" -C "$OPDATA" .
 echo "DONE"
