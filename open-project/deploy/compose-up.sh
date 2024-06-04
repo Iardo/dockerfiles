@@ -5,3 +5,4 @@ if ! [ -f .env ]; then
 fi
 
 docker-compose up -d
+docker exec -i openproject-web chown -R app:app /var/openproject/assets
