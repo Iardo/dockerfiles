@@ -1,5 +1,10 @@
 version: "3.7"
 
+networks:
+  backend:
+    name: openproject-backend
+    external: true
+
 volumes:
   pgupgrade:
     name: openproject-pgupgrade
@@ -21,14 +26,16 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    environment:
-      PGDATA: /var/lib/postgresql/data
-      OPDATA: /var/openproject/assets
     volumes:
       - "./backups:/backups"
       - "./:/control"
       - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
       - "${OPDATA:-opdata}:/var/openproject/assets"
+    networks:
+      - backend
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      OPDATA: /var/openproject/assets
   upgrade:
     container_name: openproject-upgrade
     entrypoint: ["tail", "-f", "/dev/null"]
@@ -36,8 +43,10 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    environment:
-      PGDATA: /var/lib/postgresql/data
     volumes:
       - "./:/control"
       - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
+    networks:
+      - backend
+    environment:
+      PGDATA: /var/lib/postgresql/data
