@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker exec openproject-backup "/bin/bash /control/script-backup.sh"
+docker exec -u root -i openproject-backup /control/script-backup.sh
