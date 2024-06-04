@@ -21,7 +21,7 @@ volumes:
 services:
   backup:
     container_name: openproject-backup
-    entrypoint: "/control/docker-entrypoint.sh"
+    entrypoint: ["tail", "-f", "/dev/null"]
     restart: "no"
     build:
       context: .
@@ -38,7 +38,7 @@ services:
       OPDATA: /var/openproject/assets
   upgrade:
     container_name: openproject-upgrade
-    entrypoint: "/control/docker-entrypoint.sh"
+    entrypoint: ["tail", "-f", "/dev/null"]
     restart: "no"
     build:
       context: .
