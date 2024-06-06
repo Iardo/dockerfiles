@@ -31,6 +31,7 @@ services:
       - ./:/control
       - pgdata:/var/lib/postgresql/data
       - opdata:/var/openproject/assets
+      - assets:/app/public
     networks:
       - backend
   upgrade:
@@ -42,6 +43,6 @@ services:
       dockerfile: dockerfile
     volumes:
       - ./:/control
-      - pgdata:/var/lib/postgresql/data"
+      - pgdata:/var/lib/postgresql/data
     networks:
       - backend
