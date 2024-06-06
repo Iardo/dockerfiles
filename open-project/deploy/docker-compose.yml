@@ -42,9 +42,11 @@ services:
     <<: *restart_policy
     container_name: openproject-database
     image: postgres:13
+    command: "/script-database.sh"
     stop_grace_period: "3s"
     volumes:
-      - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
+      - ./script-database.sh:/script-database.sh:ro
+      - ${PGDATA:-pgdata}:/var/lib/postgresql/data
     networks:
       - backend
     environment:
@@ -66,7 +68,7 @@ services:
     depends_on:
       - web
     ports:
-      - "${PORT:-8080}:80"
+      - ${PORT:-8080}:80
     networks:
       - frontend
     volumes:
@@ -136,5 +138,7 @@ services:
     container_name: openproject-seeder
     command: "./docker/prod/seeder"
     restart: on-failure
+    depends_on:
+      - db
     networks:
       - backend

@@ -6,8 +6,6 @@ networks:
     external: true
 
 volumes:
-  pgupgrade:
-    name: openproject-pgupgrade
   pgdata:
     name: openproject-pgdata
     external: true
@@ -31,7 +29,6 @@ services:
       - ./:/control
       - pgdata:/var/lib/postgresql/data
       - opdata:/var/openproject/assets
-      - assets:/app/public
     networks:
       - backend
   upgrade:
