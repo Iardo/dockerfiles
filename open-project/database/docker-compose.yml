@@ -27,15 +27,12 @@ services:
       context: .
       dockerfile: dockerfile
     volumes:
-      - "./backups:/backups"
-      - "./:/control"
-      - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
-      - "${OPDATA:-opdata}:/var/openproject/assets"
+      - ./backups:/backups
+      - ./:/control
+      - pgdata:/var/lib/postgresql/data
+      - opdata:/var/openproject/assets
     networks:
       - backend
-    environment:
-      PGDATA: /var/lib/postgresql/data
-      OPDATA: /var/openproject/assets
   upgrade:
     container_name: openproject-upgrade
     entrypoint: ["tail", "-f", "/dev/null"]
@@ -44,9 +41,7 @@ services:
       context: .
       dockerfile: dockerfile
     volumes:
-      - "./:/control"
-      - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
+      - ./:/control
+      - pgdata:/var/lib/postgresql/data"
     networks:
       - backend
-    environment:
-      PGDATA: /var/lib/postgresql/data
