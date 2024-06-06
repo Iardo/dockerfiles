@@ -1,0 +1,44 @@
+version: '3'
+
+volumes:
+  images-avatars:
+    name: planka-images-avatars
+  images-background:
+    name: planka-images-background
+  attachments:
+    name: planka-attachments
+  database-data:
+    name: planka-database
+
+services:
+  planka:
+    container_name: planka-web
+    image: ghcr.io/plankanban/planka:1.17.5
+    restart: on-failure
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - images-avatars:/app/public/user-avatars
+      - images-background:/app/public/project-background-images
+      - attachments:/app/private/attachments
+    ports:
+      - ${PORT:-3000}:1337
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-3ce4ca9b19246fc871a77cf7fef991dea68422b3e8c1d7ca068799ca2727872ebc795c5ea0421d48d01288b47c58764bac07f1720ba524a542ad2c5a812fa4d2}
+      - BASE_URL=http://${HOST:-localhost}:${PORT:-3000}
+
+  database:
+    container_name: planka-database
+    image: postgres:14-alpine
+    restart: on-failure
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d planka"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_DB=planka
+      - POSTGRES_HOST_AUTH_METHOD=trust
