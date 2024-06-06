@@ -21,9 +21,9 @@ services:
       database:
         condition: service_healthy
     env_file:
-      - path: .env
+      - path: ".env"
         required: false
-      - path: .env.override
+      - path: ".env.override"
         required: false
     volumes:
       - images-avatars:/app/public/user-avatars
