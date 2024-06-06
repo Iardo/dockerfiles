@@ -1,5 +1,9 @@
 version: '3'
 
+networks:
+  backend:
+    name: planka-backend
+
 volumes:
   images-avatars:
     name: planka-images-avatars
@@ -22,6 +26,8 @@ services:
       - images-avatars:/app/public/user-avatars
       - images-background:/app/public/project-background-images
       - attachments:/app/private/attachments
+    networks:
+      - backend
     ports:
       - ${PORT:-3000}:1337
     environment:
@@ -34,6 +40,10 @@ services:
     restart: on-failure
     volumes:
       - database-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+      - 5432:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d planka"]
       interval: 10s
