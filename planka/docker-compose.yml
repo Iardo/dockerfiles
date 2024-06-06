@@ -22,6 +22,11 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    env_file:
+      - path: .env
+        required: false
+      - path: .env.override
+        required: false
     volumes:
       - images-avatars:/app/public/user-avatars
       - images-background:/app/public/project-background-images
@@ -29,10 +34,7 @@ services:
     networks:
       - backend
     ports:
-      - ${PORT:-3000}:1337
-    environment:
-      - SECRET_KEY=${SECRET_KEY:-3ce4ca9b19246fc871a77cf7fef991dea68422b3e8c1d7ca068799ca2727872ebc795c5ea0421d48d01288b47c58764bac07f1720ba524a542ad2c5a812fa4d2}
-      - BASE_URL=http://${HOST:-localhost}:${PORT:-3000}
+      - 3000:1337
 
   database:
     container_name: planka-database
@@ -50,5 +52,7 @@ services:
       timeout: 5s
       retries: 5
     environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=planka
       - POSTGRES_HOST_AUTH_METHOD=trust
