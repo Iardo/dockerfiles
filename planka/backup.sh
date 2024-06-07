@@ -2,42 +2,46 @@
 set -e
 set -o pipefail
 
-# Configure those to match your Planka Docker container names
-PLANKA_DOCKER_CONTAINER_PLANKA="planka-web"
-PLANKA_DOCKER_CONTAINER_POSTGRES="planka-database"
+TIMESTAMP=$(date +"%Y.%m.%d-%H.%M.%S")
+FOLDER_BACKUPS="./backups"
+# Docker container names
+CONTAINER_PLANKA="planka-web"
+CONTAINER_DATABASE="planka-database"
+
+# Create Backups folder
+mkdir -p $FOLDER_BACKUPS
 
 # Create Temporary folder
-BACKUP_DATETIME=$(date +"%Y.%m.%d-%H.%M.%S")
-mkdir -p $BACKUP_DATETIME-backup
+mkdir -p $TIMESTAMP-backup
 
 # Dump DB into SQL File
-echo -n "Exporting postgres database ... "
-docker exec -t $PLANKA_DOCKER_CONTAINER_POSTGRES pg_dumpall -c -U postgres > $BACKUP_DATETIME-backup/postgres.sql
+echo -n "Exporting database ..."
+docker exec -t $CONTAINER_DATABASE pg_dumpall -c -U postgres > $TIMESTAMP-backup/postgres.sql
 echo "Success!"
 
 # Export Docker Volumes
-echo -n "Exporting user-avatars ... "
-docker run --rm --volumes-from $PLANKA_DOCKER_CONTAINER_PLANKA -v $(pwd)/$BACKUP_DATETIME-backup:/backup ubuntu cp -r /app/public/user-avatars /backup/user-avatars
+echo -n "Exporting images-avatars ..."
+docker run --rm --volumes-from $CONTAINER_PLANKA -v $(pwd)/$TIMESTAMP-backup:/backup ubuntu cp -r /app/public/user-avatars /backup/user-avatars
 echo "Success!"
-echo -n "Exporting project-background-images ... "
-docker run --rm --volumes-from $PLANKA_DOCKER_CONTAINER_PLANKA -v $(pwd)/$BACKUP_DATETIME-backup:/backup ubuntu cp -r /app/public/project-background-images /backup/project-background-images
+echo -n "Exporting images-background ..."
+docker run --rm --volumes-from $CONTAINER_PLANKA -v $(pwd)/$TIMESTAMP-backup:/backup ubuntu cp -r /app/public/project-background-images /backup/project-background-images
 echo "Success!"
-echo -n "Exporting attachments ... "
-docker run --rm --volumes-from $PLANKA_DOCKER_CONTAINER_PLANKA -v $(pwd)/$BACKUP_DATETIME-backup:/backup ubuntu cp -r /app/private/attachments /backup/attachments
+echo -n "Exporting attachments ..."
+docker run --rm --volumes-from $CONTAINER_PLANKA -v $(pwd)/$TIMESTAMP-backup:/backup ubuntu cp -r /app/private/attachments /backup/attachments
 echo "Success!"
 
 # Create tgz
-echo -n "Creating final tarball $BACKUP_DATETIME-backup.tgz ... "
-tar -czf $BACKUP_DATETIME-backup.tgz \
-  $BACKUP_DATETIME-backup/postgres.sql \
-  $BACKUP_DATETIME-backup/user-avatars \
-  $BACKUP_DATETIME-backup/project-background-images \
-  $BACKUP_DATETIME-backup/attachments
+echo -n "Generating tarball $TIMESTAMP-backup.tgz ..."
+tar -czf $FOLDER_BACKUPS/$TIMESTAMP-backup.tgz \
+  $TIMESTAMP-backup/postgres.sql \
+  $TIMESTAMP-backup/user-avatars \
+  $TIMESTAMP-backup/project-background-images \
+  $TIMESTAMP-backup/attachments
 echo "Success!"
 
 # Remove source files
-echo -n "Cleaning up temporary files and folders ... "
-rm -rf $BACKUP_DATETIME-backup
+echo -n "Cleaning up temporary files ..."
+rm -rf $TIMESTAMP-backup
 echo "Success!"
 
-echo "Backup Complete!"
+echo -e "\nBackup Complete!\n"
