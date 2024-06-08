@@ -1,8 +1,8 @@
 volumes:
-  pb_data:
-    name: grimoire-data
-  pb_migrations:
-    name: grimoire-migrations
+  pocketbase-data:
+    name: grimoire-pocketbase-data
+  pocketbase-migrations:
+    name: grimoire-pocketbase-migrations
 
 services:
   grimoire:
@@ -39,8 +39,8 @@ services:
       - path: ".env.override"
         required: false
     volumes:
-      - grimoire-data:/pb_data
-      - grimoire-migrations:/pb_migrations/
+      - pocketbase-data:/pb_data
+      - pocketbase-migrations:/pb_migrations/
     ports:
       - ${PUBLIC_POCKETBASE_PORT:-8090}:80
     healthcheck:
