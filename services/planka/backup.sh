@@ -2,11 +2,11 @@
 set -e
 set -o pipefail
 
-TIMESTAMP=$(date +"%Y.%m.%d-%H.%M.%S")
-FOLDER_BACKUPS="./backups"
 # Docker container names
 CONTAINER_PLANKA="planka-web"
 CONTAINER_DATABASE="planka-database"
+FOLDER_BACKUPS="./backups"
+TIMESTAMP=$(date +"%Y.%m.%d-%H.%M.%S")
 
 # Create Backups folder
 mkdir -p $FOLDER_BACKUPS
