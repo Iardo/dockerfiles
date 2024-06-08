@@ -22,7 +22,7 @@ echo "Success!"
 # Create tgz
 echo -n "Generating tarball $TIMESTAMP-backup.tgz ..."
 tar -czf $FOLDER_BACKUPS/$TIMESTAMP-backup.tgz \
-  $TIMESTAMP-backup/postgres.sql \
+  $TIMESTAMP-backup/postgres.sql
 echo "Success!"
 
 # Remove source files
