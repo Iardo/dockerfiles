@@ -7,5 +7,4 @@ if ! [ -f .env ]; then
 fi
 
 chmod -R 755 ./*
-docker compose pull
 docker-compose up -d
