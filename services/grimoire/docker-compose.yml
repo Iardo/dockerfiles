@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: dockerfile
     volumes:
-      - grimoire-migrations:/app/pb_migrations/
+      - pocketbase-migrations:/app/pb_migrations/
     ports:
       - ${PUBLIC_ORIGIN_PORT:-5173}:5173
     healthcheck:
