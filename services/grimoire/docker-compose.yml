@@ -1,0 +1,50 @@
+volumes:
+  pb_data:
+    name: grimoire-data
+  pb_migrations:
+    name: grimoire-migrations
+
+services:
+  grimoire:
+    image: goniszewski/grimoire
+    container_name: grimoire-web
+    restart: unless-stopped
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - grimoire-migrations:/app/pb_migrations/
+    ports:
+      - ${PUBLIC_ORIGIN_PORT:-5173}:5173
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:$PORT/api/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pocketbase:
+    image: spectado/pocketbase:0.22.10
+    container_name: grimoire-pocketbase
+    restart: unless-stopped
+    depends_on:
+      - grimoire
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    volumes:
+      - grimoire-data:/pb_data
+      - grimoire-migrations:/pb_migrations/
+    ports:
+      - ${PUBLIC_POCKETBASE_PORT:-8090}:80
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:80/api/health || exit 1
+      retries: 5
+      interval: 5s
+      timeout: 5s
