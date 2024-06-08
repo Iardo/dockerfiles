@@ -1,0 +1,38 @@
+volumes:
+  aplication-data:
+    name: linkwarden-data
+  database-data:
+    name: linkwarden-database
+
+services:
+  linkwarden:
+    container_name: linkwarden-web
+    image: ghcr.io/linkwarden/linkwarden:v2.5.3
+    restart: unless-stopped
+    depends_on:
+      - database
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    volumes:
+      - aplication-data:/data/data
+      - ./logs:/logs
+    ports:
+      - ${PORT_LINKWARDEN:-5173}:3000
+
+  database:
+    container_name: linkwarden-database
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    volumes:
+      - database-data:/var/lib/postgresql/data
+      - ./logs:/logs
+    ports:
+      - ${PORT_POSTGRES:-8090}:5432
