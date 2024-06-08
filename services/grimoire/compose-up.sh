@@ -8,6 +8,7 @@ fi
 
 if ! [ -d source ]; then
   git clone https://github.com/goniszewski/grimoire source
+  ln -s $PWD/source/pb_migrations $PWD/migrations
 fi
 
 chmod -R 755 ./*
