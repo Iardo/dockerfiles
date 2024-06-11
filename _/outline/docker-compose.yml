@@ -2,6 +2,7 @@ version: "3.2"
 
 networks:
   outline:
+    driver: bridge
 
 volumes:
   database-data:

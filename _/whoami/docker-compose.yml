@@ -8,3 +8,5 @@ services:
       - "traefik.http.routers.whoami.entrypoints=web"
     restart: unless-stopped
     container_name: whoami
+
+# https://www.reddit.com/r/Traefik/comments/gh808c/why_does_everyone_seem_to_need_the_whoami_docker/?rdt=51038
