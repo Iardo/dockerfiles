@@ -1,3 +1,7 @@
+# REFERENCE
+# https://github.com/plankanban/planka/blob/master/docker-compose.yml
+# https://docs.planka.cloud/docs/installation/docker/production_version
+
 networks:
   backend:
     name: planka-backend

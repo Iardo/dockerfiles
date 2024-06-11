@@ -1,3 +1,7 @@
+# REFERENCE
+# https://github.com/linkwarden/linkwarden/blob/main/docker-compose.yml
+# https://docs.linkwarden.app/self-hosting/installation
+
 volumes:
   aplication-data:
     name: linkwarden-data

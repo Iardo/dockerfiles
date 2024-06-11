@@ -1,3 +1,7 @@
+# REFERENCE
+# https://github.com/goniszewski/grimoire/blob/main/docker-compose.yml
+# https://github.com/goniszewski/grimoire?tab=readme-ov-file#installation
+
 volumes:
   pocketbase-data:
     name: grimoire-pocketbase-data
