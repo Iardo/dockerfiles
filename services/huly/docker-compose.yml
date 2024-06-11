@@ -1,0 +1,168 @@
+# REFERENCE
+# https://github.com/hcengineering/huly-selfhost/blob/main/template.compose.yaml
+# https://github.com/hcengineering/huly-selfhost/blob/main/README.md
+
+volumes:
+  database-data:
+    name: huly-database
+  elastic-data:
+    name: huly-elasticsearch
+  storage:
+    name: huly-storage
+
+services:
+  frontend:
+    container_name: huly-web
+    image: hardcoreeng/front:0.6.250
+    restart: unless-stopped
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    links:
+      - collaborator
+      - elasticsearch
+      - minio
+      - mongodb
+      - transactor
+    ports:
+      - ${PORT_HULY:-8087}:8080
+    environment:
+      - SERVER_PORT=8080
+      - SERVER_SECRET=${SECRET_HULY}
+      - UPLOAD_URL=${UPLOAD_PATH}
+
+  account:
+    container_name: huly-account
+    image: hardcoreeng/account:0.6.250
+    restart: unless-stopped
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    links:
+      - minio
+      - mongodb
+    ports:
+      - ${PORT_ACCOUNT:-3000}:3000
+    environment:
+      - SERVER_PORT=3000
+      - SECRET=${SECRET_ACCOUNT}
+
+  collaborator:
+    container_name: huly-collaborator
+    image: hardcoreeng/collaborator:0.6.250
+    restart: unless-stopped
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    links:
+      - minio
+      - mongodb
+      - transactor
+    ports:
+      - ${PORT_COLLABORATOR:-3078}:3078
+    environment:
+      - COLLABORATOR_PORT=3078
+      - SECRET=${SECRET_COLLABORATOR}
+      - UPLOAD_URL=${UPLOAD_PATH}
+
+  transactor:
+    container_name: huly-transactor
+    image: hardcoreeng/transactor:0.6.250
+    restart: unless-stopped
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    links:
+      - account
+      - elasticsearch
+      - minio
+      - mongodb
+      - rekoni
+    ports:
+      - ${PORT_TRANSACTOR:-3333}:3333
+    environment:
+      - SERVER_PORT=3333
+      - SERVER_SECRET=${SECRET_TRANSACTOR}
+      - UPLOAD_URL=${UPLOAD_URL}
+
+  rekoni:
+    container_name: huly-rekoni
+    image: hardcoreeng/rekoni-service:0.6.250
+    restart: unless-stopped
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+    ports:
+      - ${PORT_REKONI:-4004}:4004
+    environment:
+      - SECRET=${SECRET_REKONI}
+
+  minio:
+    container_name: huly-minio
+    image: "minio/minio"
+    restart: unless-stopped
+    command: server /data --address ":9000" --console-address ":9001"
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    ports:
+      - ${PORT_MINIO:-9000}:9000
+      - ${PORT_MINIO_CONSOLE:-9001}:9001
+    volumes:
+      - storage:/data
+
+  mongodb:
+    container_name: huly-database
+    image: mongo:7-jammy
+    restart: unless-stopped
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - database-data:/data/db
+    ports:
+      - ${PORT_MONGODB:-27017}:27017
+
+  elasticsearch:
+    container_name: huly-elasticsearch
+    image: elasticsearch:7.14.2
+    restart: unless-stopped
+    command: |
+      /bin/sh -c "./bin/elasticsearch-plugin list | grep -q ingest-attachment || yes | ./bin/elasticsearch-plugin install --silent ingest-attachment;
+      /usr/local/bin/docker-entrypoint.sh eswrapper"
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    volumes:
+      - elastic-data:/usr/share/elasticsearch/data
+    ports:
+      - ${PORT_ELASTICSEARCH:-9200}:9200
+    healthcheck:
+      test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
+      interval: 20s
+      retries: 10
+    environment:
+      - ELASTICSEARCH_PORT_NUMBER=9200
