@@ -1,4 +1,5 @@
 # ignore these folders:
+/build
 /node_modules
 
 # ignore these files:

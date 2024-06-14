@@ -17,13 +17,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "serve": "cross-env BROWSER=none HOST=0.0.0.0 react-scripts start"
+    "serve": "serve --single build --listen 3000"
   },
   "dependencies": {
-    "cross-env": "^7.0.3",
-    "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "react": "^18.3.1",
+    "serve": "^14.2.3",
     "tldraw": "^2.2.0"
   }
 }
