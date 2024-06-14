@@ -2,6 +2,10 @@
 # https://github.com/excalidraw/excalidraw/blob/master/docker-compose.yml
 # https://docs.excalidraw.com/docs/introduction/development#self-hosting
 
+networks:
+  excalidraw:
+    name: excalidraw
+
 services:
   excalidraw:
     image: excalidraw/excalidraw:sha-4bfc5bb
@@ -14,5 +18,7 @@ services:
         required: false
     ports:
       - ${PORT_EXCALIDRAW:-5000}:80
+    networks:
+      - excalidraw
     environment:
       - NODE_ENV=development

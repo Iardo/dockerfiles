@@ -2,6 +2,10 @@
 # https://github.com/linkwarden/linkwarden/blob/main/docker-compose.yml
 # https://docs.linkwarden.app/self-hosting/installation
 
+networks:
+  linkwarden:
+    name: linkwarden
+
 volumes:
   aplication-data:
     name: linkwarden-data
@@ -23,6 +27,8 @@ services:
     volumes:
       - aplication-data:/data/data
       - ./logs:/logs
+    networks:
+      - linkwarden
     ports:
       - ${PORT_LINKWARDEN:-5173}:3000
 
@@ -38,5 +44,7 @@ services:
     volumes:
       - database-data:/var/lib/postgresql/data
       - ./logs:/logs
+    networks:
+      - linkwarden
     ports:
       - ${PORT_POSTGRES:-8090}:5432

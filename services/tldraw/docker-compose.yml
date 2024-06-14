@@ -1,6 +1,10 @@
 # REFERENCE
 # https://tldraw.dev/installation
 
+networks:
+  tldraw:
+    name: tldraw
+
 services:
   tldraw:
     container_name: tldraw
@@ -13,5 +17,7 @@ services:
     build:
       context: .
       dockerfile: dockerfile
+    networks:
+      - tldraw
     ports:
       - ${PORT_TLDRAW:-6000}:3000
