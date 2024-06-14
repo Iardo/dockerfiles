@@ -2,7 +2,7 @@
 # https://tldraw.dev/installation
 
 services:
-  grimoire:
+  tldraw:
     container_name: tldraw
     restart: unless-stopped
     env_file:
