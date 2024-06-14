@@ -17,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "serve": "cross-env BROWSER=none react-scripts start"
+    "serve": "cross-env BROWSER=none HOST=0.0.0.0 react-scripts start"
   },
   "dependencies": {
     "cross-env": "^7.0.3",
