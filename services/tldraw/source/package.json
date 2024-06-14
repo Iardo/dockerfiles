@@ -17,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "serve": "serve --single build --listen 3000"
+    "serve": "serve --single build --listen tcp://0.0.0.0:3000"
   },
   "dependencies": {
     "react-dom": "^18.3.1",
