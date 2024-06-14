@@ -1,0 +1,17 @@
+# REFERENCE
+# https://tldraw.dev/installation
+
+services:
+  grimoire:
+    container_name: tldraw
+    restart: unless-stopped
+    env_file:
+      - path: ".env"
+        required: false
+      - path: ".env.override"
+        required: false
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - ${PORT_TLDRAW:-6000}:3000

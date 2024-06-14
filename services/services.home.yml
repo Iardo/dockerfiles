@@ -1,5 +1,6 @@
 services:
   - changedetection
+  - excalidraw
   - linkwarden
   - planka
-
+  - tldraw

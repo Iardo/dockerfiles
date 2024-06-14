@@ -1,0 +1,11 @@
+# ignore these folders:
+/node_modules
+
+# ignore these files:
+
+# ------------------------------------------------------------------------------
+# include these folders:
+!/.idea/
+!/.vscode/
+
+# include these files:
