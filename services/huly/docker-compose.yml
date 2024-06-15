@@ -15,11 +15,7 @@ services:
     container_name: huly-web
     image: hardcoreeng/front:0.6.250
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     links:
       - collaborator
       - elasticsearch
@@ -37,11 +33,7 @@ services:
     container_name: huly-account
     image: hardcoreeng/account:0.6.250
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     links:
       - minio
       - mongodb
@@ -55,11 +47,7 @@ services:
     container_name: huly-collaborator
     image: hardcoreeng/collaborator:0.6.250
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     links:
       - minio
       - mongodb
@@ -75,11 +63,7 @@ services:
     container_name: huly-transactor
     image: hardcoreeng/transactor:0.6.250
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     links:
       - account
       - elasticsearch
@@ -97,11 +81,7 @@ services:
     container_name: huly-rekoni
     image: hardcoreeng/rekoni-service:0.6.250
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     deploy:
       resources:
         limits:
@@ -116,11 +96,7 @@ services:
     image: "minio/minio"
     restart: unless-stopped
     command: server /data --address ":9000" --console-address ":9001"
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     ports:
       - ${PORT_MINIO:-9000}:9000
       - ${PORT_MINIO_CONSOLE:-9001}:9001
@@ -148,14 +124,10 @@ services:
     container_name: huly-elasticsearch
     image: elasticsearch:7.14.2
     restart: unless-stopped
+    env_file: .env
     command: |
       /bin/sh -c "./bin/elasticsearch-plugin list | grep -q ingest-attachment || yes | ./bin/elasticsearch-plugin install --silent ingest-attachment;
       /usr/local/bin/docker-entrypoint.sh eswrapper"
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
     volumes:
       - elastic-data:/usr/share/elasticsearch/data
     ports:

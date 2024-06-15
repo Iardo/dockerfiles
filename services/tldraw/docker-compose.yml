@@ -9,15 +9,11 @@ services:
   tldraw:
     container_name: tldraw
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     build:
       context: .
       dockerfile: dockerfile
     networks:
       - tldraw
     ports:
-      - ${PORT_TLDRAW:-6000}:3000
+      - ${PORT_TLDRAW:-3000}:3000

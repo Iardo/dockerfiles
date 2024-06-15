@@ -8,7 +8,7 @@ https://letsencrypt.org/
 https://planka.app/
 https://github.com/actualbudget/actual -- remplazar firefly3 con este
 https://hub.docker.com/r/filecloud/fileclouddocker -- remplazar nextclout por este
-https://hub.docker.com/r/adguard/adguardhome -- remplazar pihole por este
+https://hub.docker.com/r/adguard/adguardhome -- remplazar pihole por este (https://cyberhost.uk/adguard-setup/)
 https://docs.gitlab.com/ee/install/docker.html -- este instalarlo en mi server de almacenamiento porque lo pienso usar a la par con https://www.anchorpoint.app/ aunque no tiene version de linux, asi quizas amerite investigar mas, de hecho estaba leyendo su pagina y al parecer no es del todo gratis asi que habra que econtrar otra solucion
 https://lancache.net/docs/ -- leer esto https://lancache.net/docs/, posiblemente no tenga mucho uso para mi
 https://github.com/jesec/flood -- junto con este https://hub.docker.com/r/linuxserver/transmission
@@ -35,3 +35,9 @@ Revisar e instalar uno de estos:
 https://github.com/bleenco/abstruse?tab=readme-ov-file
 https://github.com/agola-io/agola?tab=readme-ov-file
 https://concourse-ci.org/
+
+## Error Monitoring
+https://github.com/getsentry/sentry/blob/master/self-hosted/config.yml
+https://github.com/highlight/highlight/tree/main/docker
+
+

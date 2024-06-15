@@ -17,13 +17,9 @@ services:
     container_name: linkwarden-web
     image: ghcr.io/linkwarden/linkwarden:v2.5.3
     restart: unless-stopped
+    env_file: .env
     depends_on:
       - database
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
     volumes:
       - aplication-data:/data/data
       - ./logs:/logs
@@ -36,11 +32,7 @@ services:
     container_name: linkwarden-database
     image: postgres:16-alpine
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     volumes:
       - database-data:/var/lib/postgresql/data
       - ./logs:/logs

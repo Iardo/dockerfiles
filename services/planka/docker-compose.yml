@@ -21,14 +21,10 @@ services:
     container_name: planka-web
     image: ghcr.io/plankanban/planka:1.17.5
     restart: on-failure
+    env_file: .env
     depends_on:
       database:
         condition: service_healthy
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
     volumes:
       - images-avatars:/app/public/user-avatars
       - images-background:/app/public/project-background-images

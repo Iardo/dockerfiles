@@ -13,11 +13,7 @@ services:
     image: goniszewski/grimoire
     container_name: grimoire-web
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     build:
       context: .
       dockerfile: dockerfile
@@ -35,13 +31,9 @@ services:
     image: spectado/pocketbase:0.22.10
     container_name: grimoire-pocketbase
     restart: unless-stopped
+    env_file: .env
     depends_on:
       - grimoire
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
     volumes:
       - pocketbase-data:/pb_data
       - pocketbase-migrations:/pb_migrations/

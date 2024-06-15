@@ -9,11 +9,7 @@ services:
     container_name: changedetection
     image: ghcr.io/dgtlmoon/changedetection.io
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
+    env_file: .env
     volumes:
       - changedetection-data:/datastore
     ports:
