@@ -1,0 +1,29 @@
+# REFERENCE
+# https://docs.craftycontrol.com/pages/getting-started/installation/docker/?h=docker
+
+networks:
+  crafty:
+    name: crafty
+
+services:
+  crafty:
+    image: arcadiatechnology/crafty-4:4.4.0
+    container_name: crafty
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - crafty
+    ports:
+        - ${PORT_CRAFTY_HTTP:-8000}:8000                # HTTP
+        - ${PORT_CRAFTY_HTTPS:-8443}:8443               # HTTPS
+        - ${PORT_CRAFTY_DYNMAP:-8123}:8123              # DYNMAP
+        - ${PORT_CRAFTY_BEDROCK:-19132}:19132/udp       # BEDROCK
+        - ${PORT_CRAFTY_RANGE:-25500-25600}:25500-25600 # PORT RANGE
+    volumes:
+        - ./backups:/crafty/backups
+        - ./logs:/crafty/logs
+        - ./servers:/crafty/servers
+        - ./config:/crafty/app/config
+        - ./import:/crafty/import
+    environment:
+        - TZ=Etc/UTC
