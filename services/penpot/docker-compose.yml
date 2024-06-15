@@ -46,10 +46,13 @@ services:
     container_name: penpot-database
     restart: unless-stopped
     stop_signal: SIGINT
+    env_file: .env
     networks:
       - penpot
     volumes:
       - database-data:/var/lib/postgresql/data
+    ports:
+      - ${PENPOT_PORT_POSTGRES:-5432}:5432
     environment:
       - POSTGRES_INITDB_ARGS=--data-checksums
 
@@ -57,6 +60,7 @@ services:
     image: redis:7
     container_name: penpot-redis
     restart: unless-stopped
+    env_file: .env
     networks:
       - penpot
 
@@ -64,6 +68,7 @@ services:
     image: sj26/mailcatcher:latest
     container_name: penpot-mailcatch
     restart: always
+    env_file: .env
     networks:
       - penpot
     ports:
