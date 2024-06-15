@@ -8,3 +8,5 @@ fi
 
 chmod -R 755 ./*
 docker-compose up -d
+
+./task-bugfix-thumbnail-permissions-issue.sh
