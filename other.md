@@ -43,4 +43,26 @@ https://concourse-ci.org/
 https://github.com/getsentry/sentry/blob/master/self-hosted/config.yml
 https://github.com/highlight/highlight/tree/main/docker
 
+https://dozzle.dev/ -- probar
+https://immich.app/ -- probar
+https://privatebin.info/ -- probar
+https://github.com/matt8707/ha-fusion -- probar
+https://moodist.app/ -- mmm, solo por curiosidad
+https://www.crowdsec.net/ -- investigar que es esto
+https://github.com/CorentinTh/it-tools -- probar
+https://hub.docker.com/r/grafana/grafana -- investigar mas, tambien esto https://github.com/ar51an/unbound-dashboard
+https://github.com/AnalogJ/scrutiny -- probar
+https://github.com/binwiederhier/ntfy -- probar
+https://github.com/mealie-recipes/mealie -- probar
+https://github.com/pucherot/Pi.Alert -- hmm, quizas, tengo que pensarmelo
+https://github.com/seriousm4x/UpSnap?tab=readme-ov-file -- probar
+https://github.com/wg-easy/wg-easy -- investigar
+https://github.com/Lissy93/web-check -- probar
+
+## Homepage
+https://www.reddit.com/r/selfhosted/comments/1bpgx7i/finally_got_my_homepage_to_look_neat_enough_to/
+
+## SSH
+https://github.com/nirui/sshwifty
+guacamole
 
