@@ -2,5 +2,6 @@ services:
   - changedetection
   - excalidraw
   - linkwarden
+  - penpot
   - planka
   - tldraw
