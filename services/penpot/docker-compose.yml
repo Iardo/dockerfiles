@@ -49,10 +49,10 @@ services:
     env_file: .env
     networks:
       - penpot
-    volumes:
-      - database-data:/var/lib/postgresql/data
     ports:
       - ${PENPOT_PORT_POSTGRES:-5432}:5432
+    volumes:
+      - database-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_INITDB_ARGS=--data-checksums
 

@@ -38,13 +38,13 @@ services:
     container_name: planka-database
     image: postgres:14-alpine
     restart: on-failure
-    volumes:
-      - database-data:/var/lib/postgresql/data
-      - ./logs:/logs
     networks:
       - backend
     ports:
       - ${PORT_POSTGRES:-5432}:5432
+    volumes:
+      - database-data:/var/lib/postgresql/data
+      - ./logs:/logs
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d planka"]
       interval: 10s

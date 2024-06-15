@@ -1,3 +1,6 @@
+<!-- TODO: actualizar los .env files de los servicios, probar que funcionen usando localhost + nombre de containers para las variables de URL, cuando tenia el dns configurado no funcionaban y tenia que colocar IP directamente, pero cuando tuve que retirarlo parece que si funcionan asi que puede que anteriormente hubiera algun tipo de problema de configuracion en pfsense que no permitia usarlas, pero ultimadamente seria bueno usar localhost + nombre de containers porque de esa manera no tengo que procuparme de los ip en que corre cada app -->
+
+
 https://hub.docker.com/_/varnish
 
 https://github.com/hcengineering/huly-selfhost -- probar, este puede ser un remplazo de .app

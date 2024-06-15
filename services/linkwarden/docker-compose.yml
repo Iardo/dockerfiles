@@ -20,23 +20,23 @@ services:
     env_file: .env
     depends_on:
       - database
-    volumes:
-      - aplication-data:/data/data
-      - ./logs:/logs
     networks:
       - linkwarden
     ports:
       - ${PORT_LINKWARDEN:-5173}:3000
+    volumes:
+      - aplication-data:/data/data
+      - ./logs:/logs
 
   database:
     container_name: linkwarden-database
     image: postgres:16-alpine
     restart: unless-stopped
     env_file: .env
-    volumes:
-      - database-data:/var/lib/postgresql/data
-      - ./logs:/logs
     networks:
       - linkwarden
     ports:
       - ${PORT_POSTGRES:-8090}:5432
+    volumes:
+      - database-data:/var/lib/postgresql/data
+      - ./logs:/logs

@@ -2,6 +2,10 @@
 # https://github.com/hcengineering/huly-selfhost/blob/main/template.compose.yaml
 # https://github.com/hcengineering/huly-selfhost/blob/main/README.md
 
+networks:
+  huly:
+    name: huly
+
 volumes:
   database-data:
     name: huly-database
@@ -22,6 +26,8 @@ services:
       - minio
       - mongodb
       - transactor
+    networks:
+      - huly
     ports:
       - ${PORT_HULY:-8087}:8080
     environment:
@@ -37,6 +43,8 @@ services:
     links:
       - minio
       - mongodb
+    networks:
+      - huly
     ports:
       - ${PORT_ACCOUNT:-3000}:3000
     environment:
@@ -52,6 +60,8 @@ services:
       - minio
       - mongodb
       - transactor
+    networks:
+      - huly
     ports:
       - ${PORT_COLLABORATOR:-3078}:3078
     environment:
@@ -70,6 +80,8 @@ services:
       - minio
       - mongodb
       - rekoni
+    networks:
+      - huly
     ports:
       - ${PORT_TRANSACTOR:-3333}:3333
     environment:
@@ -86,6 +98,8 @@ services:
       resources:
         limits:
           memory: 500M
+    networks:
+      - huly
     ports:
       - ${PORT_REKONI:-4004}:4004
     environment:
@@ -95,8 +109,10 @@ services:
     container_name: huly-minio
     image: "minio/minio"
     restart: unless-stopped
-    command: server /data --address ":9000" --console-address ":9001"
     env_file: .env
+    command: server /data --address ":9000" --console-address ":9001"
+    networks:
+      - huly
     ports:
       - ${PORT_MINIO:-9000}:9000
       - ${PORT_MINIO_CONSOLE:-9001}:9001
@@ -112,13 +128,15 @@ services:
         required: false
       - path: ".env.override"
         required: false
+    networks:
+      - huly
+    ports:
+      - ${PORT_MONGODB:-27017}:27017
+    volumes:
+      - database-data:/data/db
     environment:
       - PUID=1000
       - PGID=1000
-    volumes:
-      - database-data:/data/db
-    ports:
-      - ${PORT_MONGODB:-27017}:27017
 
   elasticsearch:
     container_name: huly-elasticsearch
@@ -128,10 +146,12 @@ services:
     command: |
       /bin/sh -c "./bin/elasticsearch-plugin list | grep -q ingest-attachment || yes | ./bin/elasticsearch-plugin install --silent ingest-attachment;
       /usr/local/bin/docker-entrypoint.sh eswrapper"
-    volumes:
-      - elastic-data:/usr/share/elasticsearch/data
+    networks:
+      - huly
     ports:
       - ${PORT_ELASTICSEARCH:-9200}:9200
+    volumes:
+      - elastic-data:/usr/share/elasticsearch/data
     healthcheck:
       test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
       interval: 20s

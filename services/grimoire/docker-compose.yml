@@ -2,6 +2,10 @@
 # https://github.com/goniszewski/grimoire/blob/main/docker-compose.yml
 # https://github.com/goniszewski/grimoire?tab=readme-ov-file#installation
 
+networks:
+  grimoire:
+    name: grimoire
+
 volumes:
   pocketbase-data:
     name: grimoire-pocketbase-data
@@ -17,10 +21,12 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    volumes:
-      - pocketbase-migrations:/app/pb_migrations/
+    networks:
+      - grimoire
     ports:
       - ${PORT_GRIMOIRE:-5173}:5173
+    volumes:
+      - pocketbase-migrations:/app/pb_migrations/
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:5173/api/health || exit 1
       interval: 5s
@@ -34,11 +40,13 @@ services:
     env_file: .env
     depends_on:
       - grimoire
+    networks:
+      - grimoire
+    ports:
+      - ${PORT_POSTGRES:-8090}:80
     volumes:
       - pocketbase-data:/pb_data
       - pocketbase-migrations:/pb_migrations/
-    ports:
-      - ${PORT_POSTGRES:-8090}:80
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:80/api/health || exit 1
       retries: 5
