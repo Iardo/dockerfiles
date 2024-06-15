@@ -21,7 +21,7 @@ services:
     volumes:
       - assets:/opt/data
     ports:
-      - ${PENPOT_PORT_FRONTEND:-5000}:80
+      - ${PENPOT_PORT_FRONTEND:-5020}:80
 
   penpot-backend:
     image: "penpotapp/backend:2.0.3"
@@ -67,6 +67,6 @@ services:
     networks:
       - penpot
     ports:
-      - ${PENPOT_PORT_MAIL:-5001}:1080
+      - ${PENPOT_PORT_MAIL:-5021}:1080
     expose:
       - 1025:1025
