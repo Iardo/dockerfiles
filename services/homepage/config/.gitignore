@@ -1,7 +1,6 @@
 # ignore these folders:
-/logs
-
 # ignore these files:
+*.log
 
 # ------------------------------------------------------------------------------
 # include these folders:
