@@ -20,7 +20,7 @@ services:
     container_name: passbolt-web
     restart: unless-stopped
     command: >
-      bash -c "/usr/bin/wait-for.sh -t 0 database:5432 -- /docker-entrypoint.sh"
+      bash -c "/usr/bin/wait-for.sh -t 0 database:5432 -- /docker-entrypoint.rootless.sh"
     depends_on:
       database:
         condition: service_healthy
