@@ -10,7 +10,6 @@ services:
     image: arcadiatechnology/crafty-4:4.4.0
     container_name: crafty
     restart: unless-stopped
-    env_file: .env
     networks:
       - crafty
     ports:
@@ -25,5 +24,6 @@ services:
         - ./servers:/crafty/servers
         - ./config:/crafty/app/config
         - ./import:/crafty/import
+    env_file: .env
     environment:
         - TZ=Etc/UTC

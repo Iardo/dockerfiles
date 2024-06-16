@@ -123,17 +123,13 @@ services:
     container_name: huly-database
     image: mongo:7-jammy
     restart: unless-stopped
-    env_file:
-      - path: ".env"
-        required: false
-      - path: ".env.override"
-        required: false
     networks:
       - huly
     ports:
       - ${PORT_MONGODB:-27017}:27017
     volumes:
       - database-data:/data/db
+    env_file: .env
     environment:
       - PUID=1000
       - PGID=1000
@@ -142,7 +138,6 @@ services:
     container_name: huly-elasticsearch
     image: elasticsearch:7.14.2
     restart: unless-stopped
-    env_file: .env
     command: |
       /bin/sh -c "./bin/elasticsearch-plugin list | grep -q ingest-attachment || yes | ./bin/elasticsearch-plugin install --silent ingest-attachment;
       /usr/local/bin/docker-entrypoint.sh eswrapper"
@@ -156,5 +151,6 @@ services:
       test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
       interval: 20s
       retries: 10
+    env_file: .env
     environment:
       - ELASTICSEARCH_PORT_NUMBER=9200

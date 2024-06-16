@@ -11,10 +11,10 @@ services:
     image: excalidraw/excalidraw:sha-4bfc5bb
     container_name: excalidraw
     restart: unless-stopped
-    env_file: .env
     networks:
       - excalidraw
     ports:
       - ${PORT_EXCALIDRAW:-5000}:80
+    env_file: .env
     environment:
       - NODE_ENV=development

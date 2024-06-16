@@ -9,7 +9,6 @@ services:
   tldraw:
     container_name: tldraw
     restart: unless-stopped
-    env_file: .env
     build:
       context: .
       dockerfile: dockerfile
@@ -17,3 +16,4 @@ services:
       - tldraw
     ports:
       - ${PORT_TLDRAW:-3000}:3000
+    env_file: .env

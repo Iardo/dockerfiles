@@ -17,7 +17,6 @@ services:
     container_name: linkwarden-web
     image: ghcr.io/linkwarden/linkwarden:v2.5.3
     restart: unless-stopped
-    env_file: .env
     depends_on:
       - database
     networks:
@@ -27,12 +26,12 @@ services:
     volumes:
       - aplication-data:/data/data
       - ./logs:/logs
+    env_file: .env
 
   database:
     container_name: linkwarden-database
     image: postgres:16-alpine
     restart: unless-stopped
-    env_file: .env
     networks:
       - linkwarden
     ports:
@@ -40,3 +39,4 @@ services:
     volumes:
       - database-data:/var/lib/postgresql/data
       - ./logs:/logs
+    env_file: .env

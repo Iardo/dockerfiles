@@ -21,7 +21,6 @@ services:
     container_name: planka-web
     image: ghcr.io/plankanban/planka:1.17.5
     restart: on-failure
-    env_file: .env
     depends_on:
       database:
         condition: service_healthy
@@ -33,6 +32,7 @@ services:
       - backend
     ports:
       - ${PORT_PLANKA:-1337}:1337
+    env_file: .env
 
   database:
     container_name: planka-database

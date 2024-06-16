@@ -16,7 +16,6 @@ services:
   penpot-frontend:
     image: penpotapp/frontend:2.0.3
     container_name: penpot-frontend
-    env_file: .env
     depends_on:
       - penpot-backend
       - penpot-exporter
@@ -26,11 +25,11 @@ services:
       - assets:/opt/data
     ports:
       - ${PENPOT_PORT_FRONTEND:-5020}:80
+    env_file: .env
 
   penpot-backend:
     image: penpotapp/backend:2.0.3
     container_name: penpot-backend
-    env_file: .env
     depends_on:
       - penpot-postgres
       - penpot-redis
@@ -38,6 +37,7 @@ services:
       - penpot
     volumes:
       - assets:/opt/data
+    env_file: .env
 
   penpot-exporter:
     image: penpotapp/exporter:2.0.3
@@ -50,13 +50,13 @@ services:
     container_name: penpot-database
     restart: unless-stopped
     stop_signal: SIGINT
-    env_file: .env
     networks:
       - penpot
     ports:
       - ${PENPOT_PORT_POSTGRES:-5432}:5432
     volumes:
       - database-data:/var/lib/postgresql/data
+    env_file: .env
     environment:
       - POSTGRES_INITDB_ARGS=--data-checksums
 
@@ -64,18 +64,18 @@ services:
     image: redis:7
     container_name: penpot-redis
     restart: unless-stopped
-    env_file: .env
     networks:
       - penpot
+    env_file: .env
 
   penpot-mailcatch:
     image: sj26/mailcatcher:latest
     container_name: penpot-mailcatch
     restart: always
-    env_file: .env
     networks:
       - penpot
     ports:
       - ${PENPOT_PORT_MAIL:-5021}:1080
     expose:
       - 1025:1025
+    env_file: .env

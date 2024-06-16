@@ -1,7 +1,7 @@
 # REFERENCE
 # https://github.com/azimuttapp/azimutt/blob/main/docker-compose.yml
-# https://github.com/azimuttapp/azimutt/blob/main/INSTALL.md#pre-build-docker-image
 # https://github.com/azimuttapp/azimutt/blob/main/INSTALL.md#environment-variables
+# https://github.com/azimuttapp/azimutt/blob/main/INSTALL.md#pre-build-docker-image
 
 networks:
   azimutt:
@@ -17,11 +17,11 @@ services:
     container_name: azimutt-web
     platform: linux/amd64
     restart: unless-stopped
-    env_file: .env
     networks:
       - azimutt
     ports:
       - ${PORT_AZIMUTT_WEB:-4000}:4000
+    env_file: .env
     environment:
       - PORT=${PORT_AZIMUTT_WEB}
 
@@ -29,10 +29,10 @@ services:
     image: postgres:16-alpine
     container_name: azimutt-database
     restart: unless-stopped
-    env_file: .env
     networks:
       - azimutt
     ports:
       - ${PORT_AZIMUTT_POSTGRES:-5432}:5432
     volumes:
       - database-data:/var/lib/postgresql/data
+    env_file: .env

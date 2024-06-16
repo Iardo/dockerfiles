@@ -20,7 +20,6 @@ services:
     image: infisical/infisical:v0.70.1-postgres
     pull_policy: always
     restart: unless-stopped
-    env_file: .env
     depends_on:
       database:
         condition: service_healthy
@@ -32,6 +31,7 @@ services:
       - infisical
     ports:
       - ${PORT_INFISICAL_WEB:-80}:8080
+    env_file: .env
     environment:
       - NODE_ENV=production
 
@@ -39,7 +39,6 @@ services:
     container_name: infisical-database
     image: postgres:16-alpine
     restart: unless-stopped
-    env_file: .env
     volumes:
       - database-data:/var/lib/postgresql/data
     networks:
@@ -51,28 +50,29 @@ services:
       interval: 5s
       timeout: 10s
       retries: 10
+    env_file: .env
 
   migration:
     image: infisical/infisical:v0.70.1-postgres
     container_name: infisical-migration
     pull_policy: always
-    env_file: .env
     depends_on:
       database:
         condition: service_healthy
     command: npm run migration:latest
     networks:
       - infisical
+    env_file: .env
 
   redis:
     image: redis:7.2.5-alpine
     container_name: infisical-redis
-    env_file: .env
     networks:
       - infisical
     ports:
       - ${PORT_INFISICAL_REDIS:-6379}:6379
     volumes:
       - redis-data:/data
+    env_file: .env
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
