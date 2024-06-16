@@ -8,7 +8,7 @@ networks:
 
 volumes:
   database-data:
-    name: infisical-databaase
+    name: infisical-database
     driver: local
   redis-data:
     name: infisical-redis
