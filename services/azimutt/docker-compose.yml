@@ -22,6 +22,8 @@ services:
       - azimutt
     ports:
       - ${PORT_AZIMUTT:-4000}:4000
+    environment:
+      - PORT=${PORT_AZIMUTT}
 
   database:
     image: postgres:16-alpine
