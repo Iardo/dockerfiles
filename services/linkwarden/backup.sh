@@ -3,7 +3,7 @@ set -e
 set -o pipefail
 
 # Docker container names
-CONTAINER_LINKWARDEN="linkwarden-web"
+CONTAINER_WEB="linkwarden-web"
 CONTAINER_DATABASE="linkwarden-database"
 FOLDER_BACKUPS="./backups"
 TIMESTAMP=$(date +"%Y.%m.%d-%H.%M.%S")

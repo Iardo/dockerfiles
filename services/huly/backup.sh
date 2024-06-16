@@ -3,8 +3,8 @@ set -e
 set -o pipefail
 
 # Docker container names
-CONTAINER_PLANKA="planka-web"
-CONTAINER_DATABASE="planka-database"
+CONTAINER_WEB="huly-web"
+CONTAINER_DATABASE="huly-database"
 FOLDER_BACKUPS="./backups"
 TIMESTAMP=$(date +"%Y.%m.%d-%H.%M.%S")
 
@@ -21,13 +21,13 @@ echo "Success!"
 
 # Export Docker Volumes
 echo -n "Exporting images-avatars ..."
-docker run --rm --volumes-from $CONTAINER_PLANKA -v $(pwd)/$TIMESTAMP-backup:/backup ubuntu cp -r /app/public/user-avatars /backup/user-avatars
+docker run --rm --volumes-from $CONTAINER_WEB -v $(pwd)/$TIMESTAMP-backup:/backup ubuntu cp -r /app/public/user-avatars /backup/user-avatars
 echo "Success!"
 echo -n "Exporting images-background ..."
-docker run --rm --volumes-from $CONTAINER_PLANKA -v $(pwd)/$TIMESTAMP-backup:/backup ubuntu cp -r /app/public/project-background-images /backup/project-background-images
+docker run --rm --volumes-from $CONTAINER_WEB -v $(pwd)/$TIMESTAMP-backup:/backup ubuntu cp -r /app/public/project-background-images /backup/project-background-images
 echo "Success!"
 echo -n "Exporting attachments ..."
-docker run --rm --volumes-from $CONTAINER_PLANKA -v $(pwd)/$TIMESTAMP-backup:/backup ubuntu cp -r /app/private/attachments /backup/attachments
+docker run --rm --volumes-from $CONTAINER_WEB -v $(pwd)/$TIMESTAMP-backup:/backup ubuntu cp -r /app/private/attachments /backup/attachments
 echo "Success!"
 
 # Create tgz

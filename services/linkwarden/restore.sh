@@ -3,7 +3,7 @@ set -e
 set -o pipefail
 
 # Docker container names
-CONTAINER_LINKWARDEN="linkwarden-web"
+CONTAINER_WEB="linkwarden-web"
 CONTAINER_POSTGRES="linkwarden-database"
 BACKUP_ARCHIVE_TGZ=$1
 BACKUP_ARCHIVE=$(basename $BACKUP_ARCHIVE_TGZ .tgz)

@@ -3,8 +3,8 @@ set -e
 set -o pipefail
 
 # Docker container names
-CONTAINER_PLANKA="planka-web"
-CONTAINER_POSTGRES="planka-database"
+CONTAINER_WEB="planka-web"
+CONTAINER_DATABASE="planka-database"
 BACKUP_ARCHIVE_TGZ=$1
 BACKUP_ARCHIVE=$(basename $BACKUP_ARCHIVE_TGZ .tgz)
 
@@ -21,18 +21,18 @@ echo "Success!"
 
 # Import Database
 echo -n "Importing database ..."
-cat $BACKUP_ARCHIVE/postgres.sql | docker exec -i $CONTAINER_POSTGRES psql -U postgres -q > $LOG_FILE
+cat $BACKUP_ARCHIVE/postgres.sql | docker exec -i $CONTAINER_DATABASE psql -U postgres -q > $LOG_FILE
 echo "Success!"
 
 # Restore Docker Volumes
 echo -n "Importing images-avatars ..."
-docker run --rm --volumes-from $CONTAINER_PLANKA -v $(pwd)/$BACKUP_ARCHIVE:/backup ubuntu cp -rf /backup/user-avatars /app/public/
+docker run --rm --volumes-from $CONTAINER_WEB -v $(pwd)/$BACKUP_ARCHIVE:/backup ubuntu cp -rf /backup/user-avatars /app/public/
 echo "Success!"
 echo -n "Importing images-background ..."
-docker run --rm --volumes-from $CONTAINER_PLANKA -v $(pwd)/$BACKUP_ARCHIVE:/backup ubuntu cp -rf /backup/project-background-images /app/public/
+docker run --rm --volumes-from $CONTAINER_WEB -v $(pwd)/$BACKUP_ARCHIVE:/backup ubuntu cp -rf /backup/project-background-images /app/public/
 echo "Success!"
 echo -n "Importing attachments ..."
-docker run --rm --volumes-from $CONTAINER_PLANKA -v $(pwd)/$BACKUP_ARCHIVE:/backup ubuntu cp -rf /backup/attachments /app/private/
+docker run --rm --volumes-from $CONTAINER_WEB -v $(pwd)/$BACKUP_ARCHIVE:/backup ubuntu cp -rf /backup/attachments /app/private/
 echo "Success!"
 
 echo -n "Cleaning up temporary files and folders ..."

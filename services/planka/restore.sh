@@ -4,7 +4,7 @@ set -o pipefail
 
 # Docker container names
 CONTAINER_PLANKA="planka-web"
-CONTAINER_POSTGRES="planka-database"
+CONTAINER_DATABASE="planka-database"
 BACKUP_ARCHIVE_TGZ=$1
 BACKUP_ARCHIVE=$(basename $BACKUP_ARCHIVE_TGZ .tgz)
 
@@ -21,7 +21,7 @@ echo "Success!"
 
 # Import Database
 echo -n "Importing database ..."
-cat $BACKUP_ARCHIVE/postgres.sql | docker exec -i $CONTAINER_POSTGRES psql -U postgres -q > $LOG_FILE
+cat $BACKUP_ARCHIVE/postgres.sql | docker exec -i $CONTAINER_DATABASE psql -U postgres -q > $LOG_FILE
 echo "Success!"
 
 # Restore Docker Volumes
