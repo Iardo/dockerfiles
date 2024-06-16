@@ -1,0 +1,78 @@
+# REFERENCE
+# https://github.com/Infisical/infisical/blob/main/docker-compose.prod.yml
+# https://infisical.com/docs/self-hosting/deployment-options/docker-compose
+
+networks:
+  infisical:
+    name: infisical
+
+volumes:
+  database-data:
+    name: infisical-databaase
+    driver: local
+  redis-data:
+    name: infisical-redis
+    driver: local
+
+services:
+  infisical:
+    container_name: infisical-web
+    image: infisical/infisical:v0.70.1-postgres
+    pull_policy: always
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      database:
+        condition: service_healthy
+      migration:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+    networks:
+      - infisical
+    ports:
+      - ${PORT_INFISICAL_WEB:-80}:8080
+    environment:
+      - NODE_ENV=production
+
+  database:
+    container_name: infisical-database
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    networks:
+      - infisical
+    ports:
+      - ${PORT_INFISICAL_POSTGRES:-5432}:5432
+    healthcheck:
+      test: "pg_isready --username=${POSTGRES_USER} && psql --username=${POSTGRES_USER} --list"
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+  migration:
+    image: infisical/infisical:v0.70.1-postgres
+    container_name: infisical-migration
+    pull_policy: always
+    env_file: .env
+    depends_on:
+      database:
+        condition: service_healthy
+    command: npm run migration:latest
+    networks:
+      - infisical
+
+  redis:
+    image: redis:7.2.5-alpine
+    container_name: infisical-redis
+    env_file: .env
+    networks:
+      - infisical
+    ports:
+      - ${PORT_INFISICAL_REDIS:-6379}:6379
+    volumes:
+      - redis-data:/data
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
