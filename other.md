@@ -14,8 +14,6 @@ https://github.com/hcengineering/huly-selfhost -- probar, este puede ser un remp
 
 https://github.com/Infisical/infisical
 https://github.com/passbolt
-https://letsencrypt.org/
-https://planka.app/
 https://github.com/actualbudget/actual -- remplazar firefly3 con este
 https://hub.docker.com/r/filecloud/fileclouddocker -- remplazar nextclout por este
 https://hub.docker.com/r/adguard/adguardhome -- remplazar pihole por este (https://cyberhost.uk/adguard-setup/)
@@ -27,8 +25,6 @@ https://github.com/filebrowser/filebrowser -- crear algun carpeta de categoria d
 https://github.com/louislam/dockge -- probar
 https://github.com/postalserver/postal -- probar
 https://github.com/OneUptime/oneuptime
-https://github.com/azimuttapp/azimutt -- intersante, probar
-https://hub.docker.com/r/dbeaver/cloudbeaver -- probar
 https://docs.paperless-ngx.com/ -- probar
 https://www.docuseal.co/ -- probar
 
