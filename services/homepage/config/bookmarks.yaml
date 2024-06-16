@@ -2,17 +2,31 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/bookmarks
 
-- Developer:
-  - Github:
-    - abbr: GH
-      href: https://github.com/
-
-- Social:
-  - Reddit:
-    - abbr: RE
-      href: https://reddit.com/
-
-- Entertainment:
-  - YouTube:
-    - abbr: YT
-      href: https://youtube.com/
+- Services:
+  - Azimutt:
+    - abbr: AZ
+      href: http://192.168.0.30:4000
+  - Cloudbeaver:
+    - abbr: CB
+      href: http://192.168.0.30:8978
+  - Excalidraw:
+    - abbr: EX
+      href: http://192.168.0.30:5000
+  - Infisical:
+    - abbr: IF
+      href: http://192.168.0.30:4300
+  - Linkwarden:
+    - abbr: LW
+      href: http://192.168.0.30:5173
+  - Passbolt:
+    - abbr: PA
+      href: http://192.168.0.30:4701
+  - Penpot:
+    - abbr: PE
+      href: http://192.168.0.30:5020
+  - Planka:
+    - abbr: PL
+      href: http://192.168.0.30:3000
+  - Tldraw:
+    - abbr: TD
+      href: http://192.168.0.30:3030
