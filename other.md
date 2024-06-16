@@ -12,8 +12,6 @@ https://hub.docker.com/_/varnish
 
 https://github.com/hcengineering/huly-selfhost -- probar, este puede ser un remplazo de .app
 
-https://github.com/Infisical/infisical
-https://github.com/passbolt
 https://github.com/actualbudget/actual -- remplazar firefly3 con este
 https://hub.docker.com/r/filecloud/fileclouddocker -- remplazar nextclout por este
 https://hub.docker.com/r/adguard/adguardhome -- remplazar pihole por este (https://cyberhost.uk/adguard-setup/)
