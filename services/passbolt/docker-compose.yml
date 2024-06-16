@@ -38,8 +38,10 @@ services:
       - ${PORT_PASSBOLT_WEB_HTTPS:-443}:443
     env_file: .env
     environment:
-      DATASOURCES_DEFAULT_DRIVER: Cake\Database\Driver\Postgres
-      DATASOURCES_DEFAULT_ENCODING: "utf8"
+      - PUID=1000
+      - PGID=1000
+      - DATASOURCES_DEFAULT_DRIVER=Cake\Database\Driver\Postgres
+      - DATASOURCES_DEFAULT_ENCODING="utf8"
 
   database:
     image: postgres:16-alpine
