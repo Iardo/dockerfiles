@@ -20,7 +20,7 @@
       href: http://192.168.0.30:5173
   - Passbolt:
     - abbr: PA
-      href: http://192.168.0.30:4701
+      href: https://192.168.0.30:4701
   - Penpot:
     - abbr: PE
       href: http://192.168.0.30:5020
