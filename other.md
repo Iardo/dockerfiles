@@ -1,6 +1,13 @@
 <!-- TODO: actualizar los .env files de los servicios, probar que funcionen usando localhost + nombre de containers para las variables de URL, cuando tenia el dns configurado no funcionaban y tenia que colocar IP directamente, pero cuando tuve que retirarlo parece que si funcionan asi que puede que anteriormente hubiera algun tipo de problema de configuracion en pfsense que no permitia usarlas, pero ultimadamente seria bueno usar localhost + nombre de containers porque de esa manera no tengo que procuparme de los ip en que corre cada app -->
 
 
+https://netboot.xyz/docs/docker
+https://netboot.xyz/docs/selfhosting
+https://netboot.xyz/docs/kb/pxe/windows/
+https://netboot.xyz/docs/faq/
+https://github.com/netbootxyz/netboot.xyz-custom/blob/master/README.md
+
+
 https://hub.docker.com/_/varnish
 
 https://github.com/hcengineering/huly-selfhost -- probar, este puede ser un remplazo de .app
@@ -17,12 +24,10 @@ https://lancache.net/docs/ -- leer esto https://lancache.net/docs/, posiblemente
 https://github.com/jesec/flood -- junto con este https://hub.docker.com/r/linuxserver/transmission
 https://github.com/fujiapple852/trippy -- revisar el docker
 https://github.com/filebrowser/filebrowser -- crear algun carpeta de categoria donde pongo contenedores que son utilitarios pero que no son aplicacions completas sino mas bien para ser usados en otras
-https://github.com/azimuttapp/azimutt -- intersante, probar
 https://github.com/louislam/dockge -- probar
 https://github.com/postalserver/postal -- probar
 https://github.com/OneUptime/oneuptime
-https://github.com/goniszewski/grimoire
-https://docs.linkwarden.app/self-hosting/installation
+https://github.com/azimuttapp/azimutt -- intersante, probar
 https://hub.docker.com/r/dbeaver/cloudbeaver -- probar
 https://docs.paperless-ngx.com/ -- probar
 https://www.docuseal.co/ -- probar
@@ -66,3 +71,11 @@ https://www.reddit.com/r/selfhosted/comments/1bpgx7i/finally_got_my_homepage_to_
 https://github.com/nirui/sshwifty
 guacamole
 
+https://github.com/koush/scrypted -- probar
+https://docs.scrypted.app/home-assistant.html
+
+## Kubernettes
+https://k3s.io/
+https://fernandocejas.com/blog/engineering/2023-01-06-over-engineered-home-lab-docker-kubernetes/
+https://www.youtube.com/watch?v=n-fAf2mte6M&themeRefresh=1
+https://www.reddit.com/r/homelab/comments/kugur2/kubernetes_or_docker_homelab/
