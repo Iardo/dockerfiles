@@ -16,7 +16,7 @@ volumes:
 
 services:
   passbolt:
-    image: passbolt/passbolt:4.8.0-1-ce
+    image: passbolt/passbolt:4.8.0-1-ce-non-root
     container_name: passbolt-web
     restart: unless-stopped
     command: >
@@ -34,12 +34,10 @@ services:
     networks:
       - passbolt
     ports:
-      - ${PORT_PASSBOLT_WEB_HTTP:-80}:80
-      - ${PORT_PASSBOLT_WEB_HTTPS:-443}:443
+      - ${PORT_PASSBOLT_WEB_HTTP:-80}:8080
+      - ${PORT_PASSBOLT_WEB_HTTPS:-443}:4433
     env_file: .env
     environment:
-      - PUID=1000
-      - PGID=1000
       - DATASOURCES_DEFAULT_DRIVER=Cake\Database\Driver\Postgres
       - DATASOURCES_DEFAULT_ENCODING="utf8"
 
