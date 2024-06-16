@@ -21,3 +21,5 @@ services:
       - cloudbeaver
     ports:
       - ${PORT_CLOUDBEAVER:-8978}:8978
+    volumes: 
+      - workspace:/opt/cloudbeaver/workspace     
