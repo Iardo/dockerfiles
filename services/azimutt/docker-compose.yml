@@ -21,9 +21,9 @@ services:
     networks:
       - azimutt
     ports:
-      - ${PORT_AZIMUTT:-4000}:4000
+      - ${PORT_AZIMUTT_WEB:-4000}:4000
     environment:
-      - PORT=${PORT_AZIMUTT}
+      - PORT=${PORT_AZIMUTT_WEB}
 
   database:
     image: postgres:16-alpine
@@ -32,5 +32,7 @@ services:
     env_file: .env
     networks:
       - azimutt
+    ports:
+      - ${PORT_AZIMUTT_POSTGRES:-5432}:5432
     volumes:
       - database-data:/var/lib/postgresql/data
