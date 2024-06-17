@@ -50,7 +50,6 @@ https://moodist.app/ -- mmm, solo por curiosidad
 https://www.crowdsec.net/ -- investigar que es esto
 https://github.com/CorentinTh/it-tools -- probar
 https://hub.docker.com/r/grafana/grafana -- investigar mas, tambien esto https://github.com/ar51an/unbound-dashboard
-https://github.com/AnalogJ/scrutiny -- probar
 https://github.com/binwiederhier/ntfy -- probar
 https://github.com/mealie-recipes/mealie -- probar
 https://github.com/pucherot/Pi.Alert -- hmm, quizas, tengo que pensarmelo
