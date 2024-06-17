@@ -36,8 +36,8 @@ services:
       - /run/user/1000/docker.sock:/var/run/docker.sock:ro
       - /sys:/host/sys:ro
       - /var/log:/host/var/log:ro
-      - netdatacache:/var/cache/netdata
-      - netdatalib:/var/lib/netdata
+      - cache:/var/cache/netdata
+      - lib:/var/lib/netdata
     env_file: .env
     environment:
       - PUID=1000
