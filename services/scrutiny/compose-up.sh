@@ -6,5 +6,5 @@ if ! [ -f .env ]; then
   cp .env.example .env
 fi
 
-chmod -R 755 ./*
+sudo chmod -R 755 ./*
 docker-compose up -d
