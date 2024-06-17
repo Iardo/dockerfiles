@@ -18,6 +18,9 @@
   - Linkwarden:
     - abbr: LW
       href: http://192.168.0.30:5173
+  - Netdata:
+    - abbr: ND
+      href: http://192.168.0.30:19999
   - Passbolt:
     - abbr: PA
       href: https://192.168.0.30:4701
@@ -27,6 +30,9 @@
   - Planka:
     - abbr: PL
       href: http://192.168.0.30:3000
+  - Scrutiny:
+    - abbr: SC
+      href: http://192.168.0.30:8900
   - Tldraw:
     - abbr: TD
       href: http://192.168.0.30:3030
