@@ -1,0 +1,57 @@
+# REFERENCE
+# https://learn.netdata.cloud/docs/netdata-agent/installation/docker
+
+volumes:
+  # caddy-config:
+  #   name: caddy-config
+  # caddy-data:
+  #   name: caddy-data
+  cache:
+    name: netdata-cache
+  lib:
+    name: netdata-lib
+
+services:
+  netdata:
+    image: netdata/netdata:v1.45.6
+    container_name: netdata
+    restart: unless-stopped
+    pid: host
+    network_mode: host
+    ports:
+      - ${PORT_NETDATA:-19999}:19999
+    security_opt:
+      - apparmor:unconfined
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    volumes:
+      - ./config:/etc/netdata
+      - /etc/group:/host/etc/group:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /etc/passwd:/host/etc/passwd:ro
+      - /proc:/host/proc:ro
+      - /run/dbus:/run/dbus:ro
+      - /run/user/$UID/docker.sock:/var/run/docker.sock:ro
+      - /sys:/host/sys:ro
+      - /var/log:/host/var/log:ro
+      - netdatacache:/var/cache/netdata
+      - netdatalib:/var/lib/netdata
+    env_file: .env
+
+  # caddy:
+  #   image: caddy:2
+  #   container_name: netdata-proxy
+  #   restart: unless-stopped
+  #   extra_hosts:
+  #     # To access netdata running with "network_mode: host".
+  #     - "host.docker.internal:host-gateway"
+  #   ports:
+  #     - ${PORT_CADDY_HTTP:-80}:80
+  #     - ${PORT_CADDY_HTTPS:-443}:443
+  #   volumes:
+  #     - ./caddyfile.template:/etc/caddy/Caddyfile
+  #     - caddy-config:/config
+  #     - caddy-data:/data
+  #   env_file: .env
