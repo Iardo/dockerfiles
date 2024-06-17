@@ -33,12 +33,15 @@ services:
       - /etc/passwd:/host/etc/passwd:ro
       - /proc:/host/proc:ro
       - /run/dbus:/run/dbus:ro
-      - /run/user/$UID/docker.sock:/var/run/docker.sock:ro
+      - /run/user/$PUID/docker.sock:/var/run/docker.sock:ro
       - /sys:/host/sys:ro
       - /var/log:/host/var/log:ro
       - netdatacache:/var/cache/netdata
       - netdatalib:/var/lib/netdata
     env_file: .env
+    environment:
+      - PUID=1000
+      - PGID=1000
 
   # caddy:
   #   image: caddy:2
