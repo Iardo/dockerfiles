@@ -17,7 +17,7 @@ services:
       - ${PORT_STUMPAPP:-10801}:10801
     volumes:
       - ./data:/data
-      - stump.toml:/config
+      - ./stump.toml:/config/.stump
     environment:
       - PUID=1000
       - PGID=1000
