@@ -2,30 +2,27 @@
 set -e
 set -o pipefail
 
-# Docker container names
+# Globals
 CONTAINER_WEB="linkwarden-web"
-CONTAINER_POSTGRES="linkwarden-database"
-BACKUP_ARCHIVE_TGZ=$1
-BACKUP_ARCHIVE=$(basename $BACKUP_ARCHIVE_TGZ .tgz)
+CONTAINER_DATABASE="linkwarden-database"
+BACKUP_ARCHIVE=$1
+BACKUP_BASENAME=$(basename $BACKUP_ARCHIVE .tgz)
 
+# Logs
 LOG_FOLDER="./logs"
-LOG_FILE=$LOG_FOLDER/${BACKUP_ARCHIVE}-restore.txt
-
-# Create Logs folder
+LOG_FILE=$LOG_FOLDER/${BACKUP_BASENAME}-restore.txt
 mkdir -p $LOG_FOLDER
 
-# Extract tgz archive
-echo -n "Extracting tarball $BACKUP_ARCHIVE_TGZ ..."
-tar -xzf $BACKUP_ARCHIVE_TGZ
-echo "Success!"
+# Restore
+echo "File: $BACKUP_ARCHIVE"
+echo "Extracting ..."
+tar -xzf $BACKUP_ARCHIVE
 
-# Import Database
-echo -n "Importing database ..."
-cat $BACKUP_ARCHIVE/postgres.sql | docker exec -i $CONTAINER_POSTGRES psql -U postgres -q > $LOG_FILE
-echo "Success!"
+echo "Importing ..."
+cat $BACKUP_BASENAME/postgres.sql | \
+  docker exec -i $CONTAINER_DATABASE psql -U postgres -q > $LOG_FILE
 
-echo -n "Cleaning up temporary files and folders ..."
-rm -r $BACKUP_ARCHIVE
-echo "Success!"
+echo "Cleaning up temporary files ..."
+rm -r $BACKUP_BASENAME
 
 echo -e "\nRestore complete!\n"

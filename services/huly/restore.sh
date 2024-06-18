@@ -2,9 +2,9 @@
 set -e
 set -o pipefail
 
-# Docker container names
-CONTAINER_WEB="planka-web"
-CONTAINER_DATABASE="planka-database"
+# Globals
+CONTAINER_WEB="huly-web"
+CONTAINER_DATABASE="huly-database"
 BACKUP_ARCHIVE_TGZ=$1
 BACKUP_ARCHIVE=$(basename $BACKUP_ARCHIVE_TGZ .tgz)
 

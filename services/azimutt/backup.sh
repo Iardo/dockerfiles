@@ -2,32 +2,27 @@
 set -e
 set -o pipefail
 
-# Docker container names
+# Globals
 CONTAINER_WEB="azimutt-web"
 CONTAINER_DATABASE="azimutt-database"
 FOLDER_BACKUPS="./backups"
 TIMESTAMP=$(date +"%Y.%m.%d-%H.%M.%S")
 
-# Create Backups folder
+# Folders
 mkdir -p $FOLDER_BACKUPS
-
-# Create Temporary folder
 mkdir -p $TIMESTAMP-backup
 
-# Dump DB into SQL File
-echo -n "Exporting database ..."
-docker exec -t $CONTAINER_DATABASE pg_dumpall -c -U postgres > $TIMESTAMP-backup/postgres.sql
-echo "Success!"
+# Dump
+echo "File: $BACKUP_ARCHIVE"
+echo "Exporting ..."
+docker exec -t $CONTAINER_DATABASE pg_dumpall -c -U postgres \
+  > $TIMESTAMP-backup/postgres.sql
 
-# Create tgz
-echo -n "Generating tarball $TIMESTAMP-backup.tgz ..."
+echo "Generating ..."
 tar -czf $FOLDER_BACKUPS/$TIMESTAMP-backup.tgz \
   $TIMESTAMP-backup/postgres.sql
-echo "Success!"
 
-# Remove source files
-echo -n "Cleaning up temporary files ..."
+echo "Cleaning up temporary files ..."
 rm -rf $TIMESTAMP-backup
-echo "Success!"
 
 echo -e "\nBackup Complete!\n"
