@@ -36,6 +36,9 @@
   - Scrutiny:
     - abbr: SC
       href: http://192.168.0.30:8900
+  - Stumpapp:
+    - abbr: ST
+      href: http://192.168.0.30:10801
   - Tldraw:
     - abbr: TD
       href: http://192.168.0.30:3030
