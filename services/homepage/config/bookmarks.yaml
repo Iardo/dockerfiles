@@ -3,6 +3,9 @@
 # https://gethomepage.dev/latest/configs/bookmarks
 
 - Services:
+  - Actual:
+    - abbr: AC
+      href: http://192.168.0.30:5006
   - Azimutt:
     - abbr: AZ
       href: http://192.168.0.30:4000
