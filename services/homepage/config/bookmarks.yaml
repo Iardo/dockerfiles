@@ -36,6 +36,9 @@
   - Planka:
     - abbr: PL
       href: http://192.168.0.30:3000
+  - Portainer:
+    - abbr: PR
+      href: http://192.168.0.30:9005
   - Scrutiny:
     - abbr: SC
       href: http://192.168.0.30:8900
