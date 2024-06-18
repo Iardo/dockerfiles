@@ -1,7 +1,17 @@
 services:
+  - actual
+  - azimutt
   - changedetection
+  - cloudbeaver
+  - crafty
+  - dashy
   - excalidraw
+  - homepage
+  - infisical
   - linkwarden
+  - netdata
   - penpot
   - planka
+  - scrutiny
   - tldraw
+  - webcheck

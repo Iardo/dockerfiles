@@ -55,7 +55,6 @@ https://github.com/mealie-recipes/mealie -- probar
 https://github.com/pucherot/Pi.Alert -- hmm, quizas, tengo que pensarmelo
 https://github.com/seriousm4x/UpSnap?tab=readme-ov-file -- probar
 https://github.com/wg-easy/wg-easy -- investigar
-https://github.com/Lissy93/web-check -- probar
 
 ## Homepage
 https://www.reddit.com/r/selfhosted/comments/1bpgx7i/finally_got_my_homepage_to_look_neat_enough_to/
