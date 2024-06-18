@@ -10,8 +10,10 @@ services:
   - infisical
   - linkwarden
   - netdata
+  - paperless-ngx
   - penpot
   - planka
   - scrutiny
+  - stompapp
   - tldraw
   - webcheck

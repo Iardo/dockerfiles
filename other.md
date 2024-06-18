@@ -23,12 +23,10 @@ https://github.com/filebrowser/filebrowser -- crear algun carpeta de categoria d
 https://github.com/louislam/dockge -- probar
 https://github.com/postalserver/postal -- probar
 https://github.com/OneUptime/oneuptime
-https://docs.paperless-ngx.com/ -- probar
 https://www.docuseal.co/ -- probar
 
 ## Manga - de aca tengo que elegir uno, asi que debo investigar bien cual es el mejor en terminos de compatibilidad y features
 https://www.kavitareader.com/ -- probar
-https://www.stumpapp.dev/ -- probar
 
 
 https://github.com/hurlenko/aria2-ariang-docker
