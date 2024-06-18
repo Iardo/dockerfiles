@@ -18,7 +18,7 @@ services:
     networks:
       - cloudbeaver
     ports:
-      - ${PORT_CLOUDBEAVER:-8978}:8978
+      - ${CLOUDBEAVER_PORT:-8978}:8978
     volumes: 
       - workspace:/opt/cloudbeaver/workspace     
     env_file: .env

@@ -22,7 +22,7 @@ services:
     networks:
       - linkwarden
     ports:
-      - ${PORT_LINKWARDEN:-5173}:3000
+      - ${LINKWARDEN_PORT:-5173}:3000
     volumes:
       - aplication-data:/data/data
       - ./logs:/logs
@@ -35,7 +35,7 @@ services:
     networks:
       - linkwarden
     ports:
-      - ${PORT_POSTGRES:-8090}:5432
+      - ${POSTGRES_PORT:-8090}:5432
     volumes:
       - database-data:/var/lib/postgresql/data
       - ./logs:/logs

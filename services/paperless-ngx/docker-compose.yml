@@ -29,7 +29,7 @@ services:
     networks:
       - paperless
     ports:
-      - ${PAPERLESS_PORT_WEB:-8000}:8000
+      - ${PAPERLESS_PORT:-8000}:8000
     volumes:
       - ./consume:/usr/src/paperless/consume
       - ./export:/usr/src/paperless/export

@@ -34,8 +34,8 @@ services:
     networks:
       - passbolt
     ports:
-      - ${PORT_PASSBOLT_WEB_HTTP:-80}:8080
-      - ${PORT_PASSBOLT_WEB_HTTPS:-443}:4433
+      - ${PASSBOLT_WEB_HTTP_PORT:-80}:8080
+      - ${PASSBOLT_WEB_HTTP_PORTS:-443}:4433
     env_file: .env
     environment:
       - DATASOURCES_DEFAULT_DRIVER=Cake\Database\Driver\Postgres
@@ -48,7 +48,7 @@ services:
     networks:
       - passbolt
     ports:
-      - ${PORT_PASSBOLT_POSTGRES:-5432}:5432
+      - ${PASSBOLT_POSTGRES_PORT:-5432}:5432
     volumes:
       - database-data:/var/lib/postgresql/data
     healthcheck:

@@ -31,7 +31,7 @@ services:
     networks:
       - backend
     ports:
-      - ${PORT_PLANKA:-1337}:1337
+      - ${PLANKA_PORT:-1337}:1337
     env_file: .env
 
   database:
@@ -41,7 +41,7 @@ services:
     networks:
       - backend
     ports:
-      - ${PORT_POSTGRES:-5432}:5432
+      - ${POSTGRES_PORT:-5432}:5432
     volumes:
       - database-data:/var/lib/postgresql/data
       - ./logs:/logs

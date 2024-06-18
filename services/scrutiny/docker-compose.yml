@@ -14,8 +14,8 @@ services:
     networks:
       - scrutiny
     ports:
-      - ${PORT_SCRUTINY:-8080}:8080 # webapp
-      - ${PORT_INFLUXDB:-8086}:8086 # influxDB admin
+      - ${SCRUTINY_PORT:-8080}:8080 # webapp
+      - ${INFLUXDB_PORT:-8086}:8086 # influxDB admin
     volumes:
       - /run/udev:/run/udev:ro
       - ./config:/opt/scrutiny/config

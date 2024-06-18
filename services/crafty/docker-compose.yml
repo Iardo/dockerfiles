@@ -13,11 +13,11 @@ services:
     networks:
       - crafty
     ports:
-        - ${PORT_CRAFTY_HTTP:-8000}:8000                # HTTP
-        - ${PORT_CRAFTY_HTTPS:-8443}:8443               # HTTPS
-        - ${PORT_CRAFTY_DYNMAP:-8123}:8123              # DYNMAP
-        - ${PORT_CRAFTY_BEDROCK:-19132}:19132/udp       # BEDROCK
-        - ${PORT_CRAFTY_RANGE:-25500-25600}:25500-25600 # PORT RANGE
+        - ${CRAFTY_HTTP_PORT:-8000}:8000                # HTTP
+        - ${CRAFTY_HTTP_PORTS:-8443}:8443               # HTTPS
+        - ${CRAFTY_PORT_DYNMAP:-8123}:8123              # DYNMAP
+        - ${CRAFTY_PORT_BEDROCK:-19132}:19132/udp       # BEDROCK
+        - ${CRAFTY_PORT_RANGE:-25500-25600}:25500-25600 # PORT RANGE
     volumes:
         - ./backups:/crafty/backups
         - ./logs:/crafty/logs

@@ -24,7 +24,7 @@ services:
     volumes:
       - assets:/opt/data
     ports:
-      - ${PENPOT_PORT_FRONTEND:-5020}:80
+      - ${PENPOT_FRONTEND_PORT:-5020}:80
     env_file: .env
 
   penpot-backend:
@@ -53,7 +53,7 @@ services:
     networks:
       - penpot
     ports:
-      - ${PENPOT_PORT_POSTGRES:-5432}:5432
+      - ${PENPOT_POSTGRES_PORT:-5432}:5432
     volumes:
       - database-data:/var/lib/postgresql/data
     env_file: .env
@@ -75,7 +75,7 @@ services:
     networks:
       - penpot
     ports:
-      - ${PENPOT_PORT_MAIL:-5021}:1080
+      - ${PENPOT_MAIL_PORT:-5021}:1080
     expose:
       - 1025:1025
     env_file: .env

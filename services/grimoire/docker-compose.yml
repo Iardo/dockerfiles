@@ -23,7 +23,7 @@ services:
     networks:
       - grimoire
     ports:
-      - ${PORT_GRIMOIRE:-5173}:5173
+      - ${GRIMOIRE_PORT:-5173}:5173
     volumes:
       - pocketbase-migrations:/app/pb_migrations/
     healthcheck:
@@ -42,7 +42,7 @@ services:
     networks:
       - grimoire
     ports:
-      - ${PORT_POSTGRES:-8090}:80
+      - ${POSTGRES_PORT:-8090}:80
     volumes:
       - pocketbase-data:/pb_data
       - pocketbase-migrations:/pb_migrations/

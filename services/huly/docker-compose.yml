@@ -29,7 +29,7 @@ services:
     networks:
       - huly
     ports:
-      - ${PORT_HULY:-8087}:8080
+      - ${HULY_WEB_PORT:-8087}:8080
     environment:
       - SERVER_PORT=8080
       - SERVER_SECRET=${SECRET_HULY}
@@ -46,7 +46,7 @@ services:
     networks:
       - huly
     ports:
-      - ${PORT_ACCOUNT:-3000}:3000
+      - ${HULY_ACCOUNT_PORT:-3000}:3000
     environment:
       - SERVER_PORT=3000
       - SECRET=${SECRET_ACCOUNT}
@@ -63,7 +63,7 @@ services:
     networks:
       - huly
     ports:
-      - ${PORT_COLLABORATOR:-3078}:3078
+      - ${HULY_COLLABORATOR_PORT:-3078}:3078
     environment:
       - COLLABORATOR_PORT=3078
       - SECRET=${SECRET_COLLABORATOR}
@@ -83,7 +83,7 @@ services:
     networks:
       - huly
     ports:
-      - ${PORT_TRANSACTOR:-3333}:3333
+      - ${HULY_TRANSACTOR_PORT:-3333}:3333
     environment:
       - SERVER_PORT=3333
       - SERVER_SECRET=${SECRET_TRANSACTOR}
@@ -101,7 +101,7 @@ services:
     networks:
       - huly
     ports:
-      - ${PORT_REKONI:-4004}:4004
+      - ${HULY_REKONI_PORT:-4004}:4004
     environment:
       - SECRET=${SECRET_REKONI}
 
@@ -114,8 +114,8 @@ services:
     networks:
       - huly
     ports:
-      - ${PORT_MINIO:-9000}:9000
-      - ${PORT_MINIO_CONSOLE:-9001}:9001
+      - ${HULY_MINIO_PORT:-9000}:9000
+      - ${HULY_MINIO_CONSOLE_PORT:-9001}:9001
     volumes:
       - storage:/data
 
@@ -126,7 +126,7 @@ services:
     networks:
       - huly
     ports:
-      - ${PORT_MONGODB:-27017}:27017
+      - ${HULY_MONGODB_PORT:-27017}:27017
     volumes:
       - database-data:/data/db
     env_file: .env
@@ -144,7 +144,7 @@ services:
     networks:
       - huly
     ports:
-      - ${PORT_ELASTICSEARCH:-9200}:9200
+      - ${HULY_ELASTICSEARCH_PORT:-9200}:9200
     volumes:
       - elastic-data:/usr/share/elasticsearch/data
     healthcheck:

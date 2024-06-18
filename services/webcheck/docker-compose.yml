@@ -14,5 +14,5 @@ services:
     networks:
       - webcheck
     ports:
-      - ${PORT_WEB_CHECK:-3000}:3000
+      - ${WEBCHECK_PORT:-3000}:3000
     env_file: .env

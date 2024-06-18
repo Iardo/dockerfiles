@@ -30,7 +30,7 @@ services:
     networks:
       - infisical
     ports:
-      - ${PORT_INFISICAL_WEB:-80}:8080
+      - ${INFISICAL_WEB_PORT:-80}:8080
     env_file: .env
     environment:
       - NODE_ENV=production
@@ -44,7 +44,7 @@ services:
     networks:
       - infisical
     ports:
-      - ${PORT_INFISICAL_POSTGRES:-5432}:5432
+      - ${INFISICAL_POSTGRES_PORT:-5432}:5432
     healthcheck:
       test: "pg_isready --username=${POSTGRES_USER} && psql --username=${POSTGRES_USER} --list"
       interval: 5s
@@ -70,7 +70,7 @@ services:
     networks:
       - infisical
     ports:
-      - ${PORT_INFISICAL_REDIS:-6379}:6379
+      - ${INFISICAL_REDIS_PORT:-6379}:6379
     volumes:
       - redis-data:/data
     env_file: .env

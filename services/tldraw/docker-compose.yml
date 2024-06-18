@@ -15,5 +15,5 @@ services:
     networks:
       - tldraw
     ports:
-      - ${PORT_TLDRAW:-3000}:3000
+      - ${TLDRAW_PORT:-3000}:3000
     env_file: .env

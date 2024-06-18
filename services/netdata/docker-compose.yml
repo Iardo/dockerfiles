@@ -19,7 +19,7 @@ services:
     pid: host
     network_mode: host
     ports:
-      - ${PORT_NETDATA:-19999}:19999
+      - ${NETDATA_PORT:-19999}:19999
     security_opt:
       - apparmor:unconfined
     cap_add:
@@ -51,8 +51,8 @@ services:
   #     # To access netdata running with "network_mode: host".
   #     - "host.docker.internal:host-gateway"
   #   ports:
-  #     - ${PORT_CADDY_HTTP:-80}:80
-  #     - ${PORT_CADDY_HTTPS:-443}:443
+  #     - ${CADDY_HTTP_PORT:-80}:80
+  #     - ${CADDY_HTTP_PORTS:-443}:443
   #   volumes:
   #     - ./caddyfile.template:/etc/caddy/Caddyfile
   #     - caddy-config:/config
